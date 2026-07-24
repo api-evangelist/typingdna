@@ -1,0 +1,618 @@
+openapi: 3.0.3
+info:
+  title: TypingDNA - Authentication API Documentation advanced API
+  description: 'With [TypingDNA](https://swagger.io) you can recognize users by the way they type on their keyboards (we support both desktop & mobile). Our typing biometrics engine, exposed by a RESTful API, analyzes typing patterns and accurately determines if they are a match with a known, enrolled user.
+
+
+    Our solution is deployed in scenarios in which the identity of a user needs confirmation -- such as enforcing password resets, complimenting primary authentication means with an additional layer of security, or in the place of OTP flows. The API is not constrained to specific use-cases or authentication stacks, and can be incorporated anywhere within your architecture that end-users are typing.
+
+
+    Where to start? [Sign up](https://www.typingdna.com/clients/signup) for a free Starter account to obtain an _apiKey_ and _apiSecret_, and then follow along with this [getting started tutorial](https://www.typingdna.com/docs/postman-tutorial-auto-authentication-api.html). Demos and sources are available on [GitHub](https://github.com/TypingDNA).
+
+
+    Some useful links:
+
+    - [Authentication API Documentation](https://api.typingdna.com/docs)
+
+    - [Sign Up For a Free Account](https://www.typingdna.com/clients/signup)'
+  version: 2.3.0
+servers:
+- url: https://api.typingdna.com
+tags:
+- name: advanced
+  description: Advanced routes for customisation
+  externalDocs:
+    description: Find out more
+    url: https://api.typingdna.com/docs/index.html#api-API_Services-Advanced
+paths:
+  /save/{id}:
+    post:
+      tags:
+      - advanced
+      summary: Save typing pattern
+      description: To save/enroll a new user and/or a new typing pattern you have to make the /save request. We recommend saving at least 3 typing patterns per user in order to perform accurate authentications.
+      parameters:
+      - name: id
+        in: path
+        description: An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SaveRequestBody'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBody'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              example:
+                name: Bad request
+                message: 'Invalid parameter in request body: Syntax error.'
+                message_code: 31
+                status: 400
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              example:
+                name: Not authenticated
+                message: apiKey/apiSecret combination is invalid
+                message_code: 32
+                status: 401
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '403':
+          description: Invalid apiKey
+          content:
+            application/json:
+              example:
+                name: Invalid apiKey
+                message: You provided an invalid apiKey
+                message_code: 33
+                status: 403
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              example:
+                name: Not found
+                message: The requested resource could not be found. This error can be due to a temporary or permanent condition.
+                message_code: 38
+                status: 404
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '405':
+          description: Method not allowed
+          content:
+            application/json:
+              example:
+                name: Method not allowed
+                message: The method received in the request is known but not supported by the target resource
+                message_code: 34
+                status: 405
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              example:
+                name: Too many requests
+                message: You have reached your account request throughput limitation.
+                message_code: 52
+                status: 429
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '444':
+          description: Invalid user id
+          content:
+            application/json:
+              example:
+                name: Invalid user id
+                message: Invalid parameter user id (should be between 6 and 256 characters long and a hash or id instead of an email or phone number)
+                message_code: 35
+                status: 444
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '445':
+          description: Invalid typing pattern
+          content:
+            application/json:
+              example:
+                name: Invalid typing pattern
+                message: One or more submitted typing patterns are invalid.
+                message_code: 36
+                status: 445
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '451':
+          description: Server maintenance
+          content:
+            application/json:
+              example:
+                name: Server maintenance
+                message: The server is inactive for maintenance.
+                message_code: 45
+                status: 451
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '452':
+          description: Maximum request size exceeded
+          content:
+            application/json:
+              example:
+                name: Maximum request number exceeded
+                message: You have exceeded the maximum accepted request number for this IP address.
+                message_code: 43
+                status: 452
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '453':
+          description: Mobile pattern without motion data
+          content:
+            application/json:
+              example:
+                name: Mobile pattern without motion data
+                message: The pattern you are trying to use comes from a mobile device but has no motion data, which may lead to poor results.
+                message_code: 46
+                status: 453
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '456':
+          description: Unsupported on current subscription
+          content:
+            application/json:
+              example:
+                name: Unsupported on current subscription
+                message: Operation not supported on current subscription.
+                message_code: 53
+                status: 456
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '458':
+          description: Incompatible typing patterns
+          content:
+            application/json:
+              example:
+                name: Incompatible typing patterns
+                message: Incompatible typing patterns submitted. Only patterns for the same Device/Type/Text are supported in the same call.
+                message_code: 55
+                status: 458
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '461':
+          description: Maximum number of users reached
+          content:
+            application/json:
+              example:
+                name: Maximum number of users reached
+                message: The maximum number of users has been reached on the current subscription.
+                message_code: 51
+                status: 461
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                name: Internal server error
+                message: The server encountered an internal error or misconfiguration and was unable to complete your request. If the problem persists please contact us at support@typingdna.com .
+                message_code: 48
+                status: 500
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              example:
+                name: Service unavailable
+                message: The server is currently unable to handle the request due to a temporary condition. If the problem persists please contact us at support@typingdna.com .
+                message_code: 49
+                status: 503
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+      security:
+      - basic_auth: []
+  /verify/{id}:
+    post:
+      tags:
+      - advanced
+      summary: Verify a user by its typing pattern
+      description: The typical flow to record a new typing pattern is to issue a request to the _/save_ endpoint, followed by subsequent requests to the _/verify_ endpoint (the Auto-Enroll setting can combine these steps, explained in the [Guidelines](https://api.typingdna.com/docs/index.html#api-guidelines-auto-enroll)). When sending a pattern for verification it will be compared only to patterns coming from a similar device type (desktop, mobile), and in case of mobile patterns, registered in the same position of the phone.
+      parameters:
+      - name: id
+        in: path
+        description: An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyRequestBody'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponseBody'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              example:
+                name: Bad request
+                message: 'Invalid parameter in request body: Syntax error.'
+                message_code: 31
+                status: 400
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              example:
+                name: Not authenticated
+                message: apiKey/apiSecret combination is invalid
+                message_code: 32
+                status: 401
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '403':
+          description: Invalid apiKey
+          content:
+            application/json:
+              example:
+                name: Invalid apiKey
+                message: You provided an invalid apiKey
+                message_code: 33
+                status: 403
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              example:
+                name: Not found
+                message: The requested resource could not be found. This error can be due to a temporary or permanent condition.
+                message_code: 38
+                status: 404
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '405':
+          description: Method not allowed
+          content:
+            application/json:
+              example:
+                name: Method not allowed
+                message: The method received in the request is known but not supported by the target resource
+                message_code: 34
+                status: 405
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              example:
+                name: Too many requests
+                message: You have reached your account request throughput limitation.
+                message_code: 52
+                status: 429
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '444':
+          description: Invalid user id
+          content:
+            application/json:
+              example:
+                name: Invalid user id
+                message: Invalid parameter user id (should be between 6 and 256 characters long and a hash or id instead of an email or phone number)
+                message_code: 35
+                status: 444
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '445':
+          description: Invalid typing pattern
+          content:
+            application/json:
+              example:
+                name: Invalid typing pattern
+                message: One or more submitted typing patterns are invalid.
+                message_code: 36
+                status: 445
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '447':
+          description: Maximum request size exceeded
+          content:
+            application/json:
+              example:
+                name: Maximum request number exceeded
+                message: You have exceeded the maximum accepted request size. Please verify your post parameters.
+                message_code: 42
+                status: 447
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '448':
+          description: Mixed typing patterns
+          content:
+            application/json:
+              example:
+                name: Mixed typing patterns
+                message: You are trying to match patterns recorded from both mobile and desktop. Matching mobile and desktop typing patterns against each other is not supported.
+                message_code: 40
+                status: 448
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '449':
+          description: The typing patterns have different  textid or length
+          content:
+            application/json:
+              example:
+                name: The typing patterns have different  textid or length
+                message: You are trying to match diagrams that have different length or text id.
+                message_code: 41
+                status: 449
+        '450':
+          description: Different pattern types
+          content:
+            application/json:
+              example:
+                name: Different pattern types
+                message: You are trying to match different types of patterns.
+                message_code: 44
+                status: 450
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '451':
+          description: Server maintenance
+          content:
+            application/json:
+              example:
+                name: Server maintenance
+                message: The server is inactive for maintenance.
+                message_code: 45
+                status: 451
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '452':
+          description: Maximum request size exceeded
+          content:
+            application/json:
+              example:
+                name: Maximum request number exceeded
+                message: You have exceeded the maximum accepted request number for this IP address.
+                message_code: 43
+                status: 452
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '453':
+          description: Mobile pattern without motion data
+          content:
+            application/json:
+              example:
+                name: Mobile pattern without motion data
+                message: The pattern you are trying to use comes from a mobile device but has no motion data, which may lead to poor results.
+                message_code: 46
+                status: 453
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '454':
+          description: Match server unavailable
+          content:
+            application/json:
+              example:
+                name: Match server unavailable
+                message: Matching is not possible at the moment.
+                message_code: 47
+                status: 454
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '458':
+          description: Incompatible typing patterns
+          content:
+            application/json:
+              example:
+                name: Incompatible typing patterns
+                message: Incompatible typing patterns submitted. Only patterns for the same Device/Type/Text are supported in the same call.
+                message_code: 55
+                status: 458
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '459':
+          description: Too many typing patterns submitted
+          content:
+            application/json:
+              example:
+                name: Too many typing patterns submitted
+                message: Too many typing patterns submitted for verification.
+                message_code: 56
+                status: 459
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '461':
+          description: Maximum number of users reached
+          content:
+            application/json:
+              example:
+                name: Maximum number of users reached
+                message: The maximum number of users has been reached on the current subscription.
+                message_code: 51
+                status: 461
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '462':
+          description: Maximum number of verifications reached
+          content:
+            application/json:
+              example:
+                name: Maximum number of verifications reached
+                message: The maximum number of verifications for the current user has been reached on the current subscription.
+                message_code: 57
+                status: 462
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                name: Internal server error
+                message: The server encountered an internal error or misconfiguration and was unable to complete your request. If the problem persists please contact us at support@typingdna.com .
+                message_code: 48
+                status: 500
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              example:
+                name: Service unavailable
+                message: The server is currently unable to handle the request due to a temporary condition. If the problem persists please contact us at support@typingdna.com .
+                message_code: 49
+                status: 503
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+      security:
+      - basic_auth: []
+components:
+  schemas:
+    SaveRequestBody:
+      type: object
+      properties:
+        tp:
+          type: string
+          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
+          description: A typing pattern recorded with the TypingDNA JavaScript class.
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - tp
+    AuthResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        action:
+          type: string
+          example: verify;enroll
+          description: Returns one of the following values, corresponding to the action performed on the request - _enroll_, _verify_, _verify;enroll_. _Enroll_ is returned if there are less than 3 previous enrollments. _Verify_ is returned if initial enrollments are met, only a verification was performed, and the pattern was not additionally enrolled. If both a verification and enrollment are performed, the value is _verify;enroll_.
+        enrollment:
+          type: integer
+          example: 1
+          description: A value of 0 (false) or 1 (true). This indicates whether the submitted typing pattern(s) was enrolled for the user.
+        result:
+          type: integer
+          example: 1
+          description: A value of 0 (false match) or 1 (true match). This value is the verification result determined by our matching engine in comparing the received pattern against the enrolled patterns.
+        high_confidence:
+          type: integer
+          example: 1
+          description: A value of 0 (false) or 1 (true). This value indicates our confidence level in the ‘result’ value returned.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    ResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        success:
+          type: integer
+          example: 1
+          description: Return 1 for success and 0 for failure.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    VerifyRequestBody:
+      type: object
+      properties:
+        tp:
+          type: string
+          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
+          description: A typing pattern recorded with the TypingDNA JavaScript class. For dual pass or to submit multiple patterns for enrollment, submit typing patterns separated by _;_. _Dual pass = if the user verification has been rejected the first time, we recommend recording a new typing pattern and send both typing patterns concatenated with ; the second time. This may improve the verification of a user’s identity._
+        quality:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          description: 'An Integer: 1, 2 or 3 default: 2, recommended: 2. Read [more](https://api.typingdna.com/docs/index.html#api-guidelines-quality).'
+        device_similarity_only:
+          type: boolean
+          description: If this parameter is included in the request body, only the _device_similarity_ field is returned.
+        position_only:
+          type: boolean
+          description: If this parameter is included in the request body, only the _positions_ field is returned ([mobile position](https://api.typingdna.com/docs/index.html#api-guidelines-faq-mobile) in which the typing pattern was recorded).
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - tp
+    ErrorMessageCode:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Error name
+        message:
+          type: string
+          description: Error description
+        message_code:
+          type: integer
+          description: Message code
+        status:
+          type: integer
+          description: Http status code
+  securitySchemes:
+    basic_auth:
+      type: http
+      scheme: basic
+externalDocs:
+  description: Find out more about TypingDNA
+  url: https://api.typingdna.com

@@ -1,0 +1,503 @@
+openapi: 3.0.3
+info:
+  title: TypingDNA - Authentication API Documentation advanced optional API
+  description: 'With [TypingDNA](https://swagger.io) you can recognize users by the way they type on their keyboards (we support both desktop & mobile). Our typing biometrics engine, exposed by a RESTful API, analyzes typing patterns and accurately determines if they are a match with a known, enrolled user.
+
+
+    Our solution is deployed in scenarios in which the identity of a user needs confirmation -- such as enforcing password resets, complimenting primary authentication means with an additional layer of security, or in the place of OTP flows. The API is not constrained to specific use-cases or authentication stacks, and can be incorporated anywhere within your architecture that end-users are typing.
+
+
+    Where to start? [Sign up](https://www.typingdna.com/clients/signup) for a free Starter account to obtain an _apiKey_ and _apiSecret_, and then follow along with this [getting started tutorial](https://www.typingdna.com/docs/postman-tutorial-auto-authentication-api.html). Demos and sources are available on [GitHub](https://github.com/TypingDNA).
+
+
+    Some useful links:
+
+    - [Authentication API Documentation](https://api.typingdna.com/docs)
+
+    - [Sign Up For a Free Account](https://www.typingdna.com/clients/signup)'
+  version: 2.3.0
+servers:
+- url: https://api.typingdna.com
+tags:
+- name: optional
+  description: Optional routes
+  externalDocs:
+    description: Find out more
+    url: https://api.typingdna.com/docs/index.html#api-API_Services-Optional
+paths:
+  /changeuser/{id}:
+    post:
+      tags:
+      - optional
+      summary: Change user identifier
+      description: This can be used to change the name that identifies an already existent user.
+      parameters:
+      - name: id
+        in: path
+        description: An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangeUserRequestBody'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseBody'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              example:
+                name: Bad request
+                message: 'Invalid parameter in request body: Syntax error.'
+                message_code: 31
+                status: 400
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '401':
+          description: Not authenticated
+          content:
+            application/json:
+              example:
+                name: Not authenticated
+                message: apiKey/apiSecret combination is invalid
+                message_code: 32
+                status: 401
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '405':
+          description: Method not allowed
+          content:
+            application/json:
+              example:
+                name: Method not allowed
+                message: The method received in the request is known but not supported by the target resource
+                message_code: 34
+                status: 405
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '444':
+          description: Invalid user id
+          content:
+            application/json:
+              example:
+                name: Invalid user id
+                message: Invalid parameter user id (should be between 6 and 256 characters long and a hash or id instead of an email or phone number)
+                message_code: 35
+                status: 444
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '451':
+          description: Server maintenance
+          content:
+            application/json:
+              example:
+                name: Server maintenance
+                message: The server is inactive for maintenance.
+                message_code: 45
+                status: 451
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '452':
+          description: Maximum request size exceeded
+          content:
+            application/json:
+              example:
+                name: Maximum request number exceeded
+                message: You have exceeded the maximum accepted request number for this IP address.
+                message_code: 43
+                status: 452
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '455':
+          description: User id already exists
+          content:
+            application/json:
+              example:
+                name: User id already exists
+                message: New user id cannot be set since it's already used
+                message_code: 50
+                status: 455
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                name: Internal server error
+                message: The server encountered an internal error or misconfiguration and was unable to complete your request. If the problem persists please contact us at support@typingdna.com .
+                message_code: 48
+                status: 500
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              example:
+                name: Service unavailable
+                message: The server is currently unable to handle the request due to a temporary condition. If the problem persists please contact us at support@typingdna.com .
+                message_code: 49
+                status: 503
+              schema:
+                $ref: '#/components/schemas/ErrorMessageCode'
+      security:
+      - basic_auth: []
+  /user/reset-profile:
+    post:
+      tags:
+      - optional
+      parameters:
+      - name: Authorization
+        in: header
+        description: A unique basic authentication token specific to each application. This token can be obtained from the Verify Dashboard by selecting your application and navigating to the Reset Profile endpoint section.
+        required: true
+        schema:
+          type: string
+      description: The Reset Profile endpoint (/user/reset-profile for Standard integrations or /oidc/webhook/reset-profile for OIDC integrations) enables the deletion of a user's typing patterns and profile reset. To access the required endpoint URL and Authorization token, navigate to the TypingDNA Verify Dashboard, select your application, and locate the Reset Profile endpoint section. Upon successful deletion, the endpoint returns the count of deleted patterns.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteUserBody'
+            example:
+              user_id: john.doe@company.com
+        required: true
+      security:
+      - ResetProfileBasicAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserResponse'
+              examples:
+                Done:
+                  value:
+                    success: 1
+                    deleted: 3
+                    message: Done
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserResponse'
+              examples:
+                identifier missing:
+                  value:
+                    success: 0
+                    message: identifier missing
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserResponse'
+              examples:
+                unauthorized:
+                  value:
+                    success: 0
+                    message: unauthorized
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteUserResponse'
+              examples:
+                internal server error:
+                  value:
+                    success: 0
+                    message: internal server error
+  /otp/send:
+    post:
+      tags:
+      - optional
+      description: The /otp/send endpoint manually triggers the sending of a verification code to the user’s email or phone. This bypasses the Verify window’s typing verification flow, and is useful for scenarios in which users cannot type to confirm their identity, such as access via a mobile device. Available only if RoT is enabled (default).
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendOtpBody'
+            example:
+              clientId: a46b03d7c7e30122fda3ad721cb0757f
+              applicationId: 3c42621c2a6b18b789be8ef0f25bd732
+              payload: 0d138ccacaafdef6bb3c637eced5e83bd895a08e90383f49bc9db56243680b98960e1668f6e19be4656bbd4be486d35533870ec86d47ef725b5a93b951f2c2d479ff907bd99c53a4847d489806cd4e1b
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendOtpResponse'
+              examples:
+                OTP given matches:
+                  value:
+                    success: 1
+                    status: 200
+                    code: 9
+                    message: OTP sent
+                    otp: 270015
+                Too many OTP attempts sent:
+                  value:
+                    success: 1
+                    status: 200
+                    code: 13
+                    message: Too many OTP attempts sent. Please try later.
+                    limitedUntil: 1620379408000,
+                Could not send OTP:
+                  value:
+                    success: 1
+                    status: 200
+                    code: 26
+                    message: Could not send OTP. Provider error.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageCode'
+              examples:
+                Bad request:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 101
+                    message: Bad request
+                Invalid client id:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 105
+                    message: Invalid client id
+                Invalid application id:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 105
+                    message: Invalid application id
+                Missing user identifier:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 109
+                    message: Missing user identifier
+                Request has expired:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 108
+                    message: Request has expired
+                SMS gateway not found:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 129
+                    message: SMS gateway not found.
+                Email gateway not found:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 132
+                    message: Email gateway not found.
+                Invalid or missing phone number:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 112
+                    message: Invalid or missing phone number
+                Invalid or missing email address:
+                  value:
+                    success: 0
+                    status: 400
+                    code: 111
+                    message: Invalid or missing email address
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageCode'
+              examples:
+                Operation not allowed:
+                  value:
+                    success: 0
+                    status: 401
+                    code: 126
+                    message: Operation not allowed
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageCode'
+              examples:
+                Operation not allowed:
+                  value:
+                    success: 0
+                    status: 500
+                    code: 107
+                    message: Internal server error
+components:
+  schemas:
+    DeleteUserResponse:
+      type: object
+      properties:
+        success:
+          type: integer
+          example: 1
+          description: Return 1 for success and 0 for failure.
+        deleted:
+          type: integer
+          example: 3
+          description: The number of patterns deleted, if success is 1
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done
+      required:
+      - success
+      - message
+    MessageCode:
+      type: object
+      properties:
+        success:
+          type: integer
+          example: 0
+          description: Return 0 for failure.
+        status:
+          type: string
+          description: Http status code
+        message:
+          type: string
+          description: Error description
+        code:
+          type: integer
+          description: Error code
+      required:
+      - success
+      - code
+      - message
+      - status
+    SendOtpResponse:
+      type: object
+      properties:
+        success:
+          type: integer
+          example: 200
+          description: Return 1 for success and 0 for failure.
+        code:
+          type: integer
+          example: 19
+          description: Response code.
+        message:
+          type: string
+          example: OTP given matches
+          description: Status message, typically OTP given matches.
+        status:
+          type: integer
+          example: 200
+          description: HTTP status code.
+        otp:
+          type: integer
+          example: 455105
+          description: The OTP code sent to the user.
+      required:
+      - success
+      - code
+      - message
+      - status
+    ChangeUserRequestBody:
+      type: object
+      properties:
+        newuserid:
+          type: string
+          example: ac798b8221ab846a2847035bdf5c00fe
+          description: An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - newuserid
+    ResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        success:
+          type: integer
+          example: 1
+          description: Return 1 for success and 0 for failure.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    SendOtpBody:
+      type: object
+      properties:
+        clientId:
+          type: string
+          description: The client id found in your TypingDNA Verify dashboard.
+        applicationId:
+          type: string
+          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
+        payload:
+          type: string
+          description: 'Is an AES-256-CBC encrypted string using a Pbkdf2 key (with the client secret used as the password, and the application id as the salt), of the JSON with the following structure: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode" }. We recomend to only use one of the user identifiers, either email or phone, as the other one will be disregarded. The Pbkdf2 key uses SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
+      required:
+      - clientId
+      - applicationId
+      - payload
+    DeleteUserBody:
+      type: object
+      properties:
+        user_id:
+          type: string
+          example: john.doe@gmail.com
+          description: The user identifier used (email, phone number or id).
+      required:
+      - user_id
+    ErrorMessageCode:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Error name
+        message:
+          type: string
+          description: Error description
+        message_code:
+          type: integer
+          description: Message code
+        status:
+          type: integer
+          description: Http status code
+  securitySchemes:
+    basic_auth:
+      type: http
+      scheme: basic
+externalDocs:
+  description: Find out more about TypingDNA
+  url: https://api.typingdna.com
