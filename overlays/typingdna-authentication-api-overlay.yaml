@@ -1,0 +1,49 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the TypingDNA Authentication API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-07-21'
+  method: generated
+  source: openapi/typingdna-authentication-api-openapi-original.json
+extends: openapi/typingdna-authentication-api-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist:
+        provider: typingdna
+        artifacts:
+          conventions: conventions/typingdna-conventions.yml
+          errors: errors/typingdna-problem-types.yml
+          authentication: authentication/typingdna-authentication.yml
+          lifecycle: lifecycle/typingdna-lifecycle.yml
+          sandbox: sandbox/typingdna-sandbox.yml
+  - target: $.servers
+    description: The published spec lists only api.typingdna.com; the pricing FAQ documents regional public-cloud deployments.
+    update: []
+  - target: $
+    description: Add the documented regional servers as an enhancement (source https://www.typingdna.com/pricing/auth-api).
+    update:
+      x-additional-servers:
+        - url: https://eu-api.typingdna.com
+          description: EU public cloud (Starter/Pro)
+        - url: https://us-api.typingdna.com
+          description: US public cloud (Starter/Pro)
+  - target: $.paths['/auto/{id}'].post
+    update:
+      operationId: autoEnrollOrVerify
+  - target: $.paths['/user/{id}'].get
+    update:
+      operationId: checkUser
+  - target: $.paths['/user/{id}'].delete
+    update:
+      operationId: deleteUser
+  - target: $.paths['/save/{id}'].post
+    update:
+      operationId: savePattern
+  - target: $.paths['/verify/{id}'].post
+    update:
+      operationId: verifyUser
+  - target: $.paths['/changeuser/{id}'].post
+    update:
+      operationId: changeUserId

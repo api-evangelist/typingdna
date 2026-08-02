@@ -1,0 +1,41 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/typingdna-authentication-api-openapi-original.json
+note: >-
+  No official TypingDNA MCP server was found (docs, GitHub org, npm, and the
+  official MCP registry were searched). Candidate tool list derived from the
+  published OpenAPI operations; the spec ships no operationIds, so tool names
+  are derived from method + path.
+server:
+  name: typingdna
+  transport: http
+  url: null
+tools:
+  - name: auto_enroll_or_verify
+    description: Coordinate enrollment and verification for a user's typing pattern in one call (enrolls until enough patterns exist, then verifies).
+    source_operation: 'openapi/typingdna-authentication-api-openapi-original.json#POST /auto/{id}'
+  - name: check_user
+    description: Check how many typing patterns (desktop and mobile) are enrolled for a user id, optionally per pattern type / text id.
+    source_operation: 'openapi/typingdna-authentication-api-openapi-original.json#GET /user/{id}'
+  - name: delete_user
+    description: Delete a user's enrolled typing patterns.
+    source_operation: 'openapi/typingdna-authentication-api-openapi-original.json#DELETE /user/{id}'
+  - name: save_pattern
+    description: Enroll a typing pattern for a user id.
+    source_operation: 'openapi/typingdna-authentication-api-openapi-original.json#POST /save/{id}'
+  - name: verify_user
+    description: Verify a typing pattern against a user's enrolled patterns; returns result, score and confidence.
+    source_operation: 'openapi/typingdna-authentication-api-openapi-original.json#POST /verify/{id}'
+  - name: change_user_id
+    description: Rename a user id (move enrolled patterns to a new identifier).
+    source_operation: 'openapi/typingdna-authentication-api-openapi-original.json#POST /changeuser/{id}'
+  - name: verify_otp_validate
+    description: Validate the OTP a user submitted through the Verify 2FA flow.
+    source_operation: 'openapi/typingdna-verify-2fa-openapi.json#POST /otp/validate'
+  - name: verify_otp_send
+    description: Manually trigger sending a Verify 2FA OTP over the RoT channel (SMS/email).
+    source_operation: 'openapi/typingdna-verify-2fa-openapi.json#POST /otp/send'
+  - name: verify_reset_profile
+    description: Delete a user's typing patterns / reset their Verify 2FA profile.
+    source_operation: 'openapi/typingdna-verify-2fa-openapi.json#POST /user/reset-profile'

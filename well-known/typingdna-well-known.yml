@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: searched
+source: 'Live probes of /.well-known/ on www.typingdna.com, api.typingdna.com and verify.typingdna.com (2026-07-21).'
+hosts:
+  - host: https://www.typingdna.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://api.typingdna.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://verify.typingdna.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: typingdna-verify-openid-configuration.json
+        note: >-
+          OIDC discovery for the Verify 2FA OIDC integration (issuer
+          https://verify.typingdna.com): authorization_code + refresh_token +
+          device_code + jwt-bearer grants, PKCE S256, RS256 id tokens, scopes
+          openid/email/profile.
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404

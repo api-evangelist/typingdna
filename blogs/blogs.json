@@ -1,0 +1,28 @@
+{
+  "repo": "typingdna",
+  "feeds": [
+    {
+      "source": "https://www.typingdna.com/contact",
+      "feed_url": "https://www.typingdna.com/contact",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://blog.typingdna.com/feed/",
+      "feed_url": "https://blog.typingdna.com/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://blog.typingdna.com",
+      "feed_url": "https://blog.typingdna.com/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 50,
+  "fetched": "2026-08-01T15:49:00Z"
+}

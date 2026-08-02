@@ -1,0 +1,100 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  Message-code registry from https://api.typingdna.com/docs/index.html
+  (Message codes section) + HTTP response catalog derived from the published
+  OpenAPI 3.0.3 (openapi/typingdna-authentication-api-openapi-original.json)
+  + Verify 2FA error table from https://verify.typingdna.com/docs (Error
+  messages section).
+format: proprietary-json-envelope
+envelope: '{ "success": 0|1, "status": <http code>, "message": "...", "message_code": <int> }'
+rfc9457: false
+
+authentication_api_http_responses:
+  - {status: 400, title: Bad request}
+  - {status: 401, title: Not authenticated}
+  - {status: 403, title: Invalid apiKey}
+  - {status: 404, title: Not found}
+  - {status: 405, title: Method not allowed}
+  - {status: 429, title: Too many requests}
+  - {status: 444, title: Invalid user id}
+  - {status: 445, title: Invalid typing pattern}
+  - {status: 447, title: Maximum request size exceeded}
+  - {status: 448, title: Mixed typing patterns}
+  - {status: 449, title: The typing patterns have different textid or length}
+  - {status: 450, title: Different pattern types}
+  - {status: 451, title: Server maintenance}
+  - {status: 452, title: Maximum request size exceeded}
+  - {status: 453, title: Mobile pattern without motion data}
+  - {status: 454, title: Match server unavailable}
+  - {status: 455, title: User id already exists}
+  - {status: 456, title: Unsupported on current subscription}
+  - {status: 458, title: Incompatible typing patterns}
+  - {status: 459, title: Too many typing patterns submitted}
+  - {status: 461, title: Maximum number of users reached}
+  - {status: 462, title: Maximum number of verifications reached}
+  - {status: 500, title: Internal server error}
+  - {status: 503, title: Service unavailable}
+
+authentication_api_message_codes:
+  - {code: 1, message: Done.}
+  - {code: 2, message: Duplicate typing pattern(s).}
+  - {code: 3, message: No previous patterns enrolled with this typing position., remediation: Enroll the new typing position.}
+  - {code: 4, message: No previous valid typing patterns found.}
+  - {code: 5, message: Pattern was previously sent for verification.}
+  - {code: 6, message: No matching quote found.}
+  - {code: 9, message: Pattern not enrolled. Not enough patterns for verification.}
+  - {code: 10, message: Pattern(s) enrolled. Not enough patterns for verification.}
+  - {code: 31, message: 'Invalid parameter in request body: Syntax error.'}
+  - {code: 32, message: apiKey/apiSecret combination is invalid.}
+  - {code: 33, message: You provided an invalid apiKey.}
+  - {code: 34, message: The method received in the request is known but not supported by the target resource.}
+  - {code: 35, message: 'Invalid parameter in request body: Syntax error.'}
+  - {code: 36, message: The typing pattern that you provided is invalid.}
+  - {code: 37, message: You have reached your concurrent plan limit.}
+  - {code: 38, message: The requested resource could not be found. This error can be due to a temporary or permanent condition.}
+  - {code: 40, message: Matching mobile and desktop typing patterns against each other is not supported.}
+  - {code: 41, message: You are trying to match diagrams that have different length or text id.}
+  - {code: 42, message: You have exceeded the maximum accepted request size. Please verify your post parameters.}
+  - {code: 43, message: You have exceeded the maximum accepted request number for this IP address.}
+  - {code: 44, message: You are trying to match different types of patterns.}
+  - {code: 45, message: The server is inactive for maintenance.}
+  - {code: 46, message: 'The pattern comes from a mobile device but has no motion data, which may lead to poor results.'}
+  - {code: 47, message: Matching is not possible at the moment.}
+  - {code: 48, message: The server encountered an internal error or misconfiguration., remediation: 'If the problem persists contact support@typingdna.com.'}
+  - {code: 49, message: The server is currently unable to handle the request due to a temporary condition., remediation: 'If the problem persists contact support@typingdna.com.'}
+  - {code: 50, message: New user id cannot be set since it's already used}
+  - {code: 51, message: The maximum number of users has been reached on the current subscription.}
+  - {code: 52, message: You have reached your account request throughput limitation.}
+  - {code: 53, message: Operation not supported on current subscription.}
+  - {code: 55, message: Incompatible typing patterns submitted. Only patterns for the same Device/Type/Text are supported in the same call.}
+  - {code: 56, message: Too many typing patterns submitted for verification.}
+  - {code: 57, message: The maximum number of verifications for the current user has been reached on the current subscription.}
+
+verify_2fa_error_codes:
+  - {code: 101, status: 400, message: Bad request}
+  - {code: 104, status: 400, message: Invalid request body}
+  - {code: 105, status: 400, message: Invalid client id}
+  - {code: 106, status: 400, message: Invalid application id}
+  - {code: 107, status: 500, message: Internal server error}
+  - {code: 108, status: 400, message: Request has expired}
+  - {code: 109, status: 400, message: Missing user identifier}
+  - {code: 111, status: 400, message: Invalid or missing email address}
+  - {code: 112, status: 400, message: Invalid or missing phone number}
+  - {code: 116, status: 500, message: Error validating OTP}
+  - {code: 124, status: 400, message: Unauthorized request}
+  - {code: 126, status: 401, message: Operation not allowed}
+  - {code: 129, status: 400, message: SMS gateway not found}
+  - {code: 132, status: 400, message: Email gateway not found}
+  - {code: 135, status: 400, message: Maximum number of active users reached}
+
+verify_2fa_result_codes:
+  - {code: 9, message: OTP sent}
+  - {code: 10, message: OTP given invalid or expired}
+  - {code: 11, message: Too many failed attempts. Please try later}
+  - {code: 12, message: User reached maximum OTP attempts and cannot do authentication. Try later.}
+  - {code: 13, message: Too many OTP attempts sent. Please try later.}
+  - {code: 19, message: OTP given matches}
+  - {code: 26, message: Could not send OTP. Provider error.}
+
+guidance: Handle responses by message_code / code, not by message string (documented recommendation).

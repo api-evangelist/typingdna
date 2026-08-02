@@ -1,0 +1,51 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/typingdna-authentication-api-openapi-original.json, openapi/typingdna-verify-2fa-openapi.json
+docs: https://api.typingdna.com/docs/index.html
+summary:
+  types:
+  - apiKey
+  - http
+  - openIdConnect
+  api_key_in:
+  - header
+schemes:
+- name: basic_auth
+  type: http
+  scheme: basic
+  description: >-
+    HTTP Basic over HTTPS (TLS 1.2+): apiKey as username, apiSecret as
+    password. Keys are issued per account in the client dashboard
+    (https://www.typingdna.com/clients/signup, free Starter tier available).
+    Applies to every Authentication API operation on api.typingdna.com /
+    eu-api.typingdna.com / us-api.typingdna.com.
+  sources:
+  - openapi/typingdna-authentication-api-openapi-original.json
+- name: ResetProfileBasicAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: Authorization token required for the /user/reset-profile endpoint. Obtain this
+    from the TypingDNA Verify Dashboard under your application's Reset Profile endpoint section.
+  sources:
+  - openapi/typingdna-verify-2fa-openapi.json
+- name: verify_2fa_payload
+  type: custom
+  description: >-
+    Verify 2FA service calls (/otp/validate, /otp/send) authenticate with
+    clientId + applicationId + an encrypted payload generated server-side by
+    the official Verify client's getDataAttributes() using the application
+    secret; credentials differ between Sandbox and Production environments.
+  sources:
+  - https://verify.typingdna.com/docs
+- name: verify_oidc
+  type: openIdConnect
+  openIdConnectUrl: https://verify.typingdna.com/.well-known/openid-configuration
+  description: >-
+    Verify 2FA OIDC integration: verify.typingdna.com is a standard OIDC
+    issuer (authorization_code + refresh_token + device_code + jwt-bearer,
+    PKCE S256, RS256 id tokens; client_secret_post/client_secret_basic or
+    public/private key auth). Used to plug typing verification into Okta,
+    Ping Identity and Microsoft Entra ID.
+  sources:
+  - well-known/typingdna-verify-openid-configuration.json

@@ -1,0 +1,75 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://api.typingdna.com/docs/index.html (API guidelines, message codes,
+  replay-attack protection, quality param) + the published OpenAPI 3.0.3
+  (https://api.typingdna.com/swagger-file.json) + Verify docs
+  (https://verify.typingdna.com/docs).
+description: >-
+  Cross-cutting request/response semantics of the TypingDNA Authentication
+  API and the Verify 2FA service API.
+base_urls:
+  - https://api.typingdna.com
+  - https://eu-api.typingdna.com (EU deployment, Starter/Pro public cloud)
+  - https://us-api.typingdna.com (US deployment, Starter/Pro public cloud)
+  - https://verify.typingdna.com (Verify 2FA service + OIDC issuer)
+api_style: REST over HTTPS (TLS 1.2+), JSON responses; Authentication API takes url-encoded form bodies, Verify takes JSON bodies.
+
+authentication:
+  scheme: HTTP Basic (apiKey as username, apiSecret as password) on the Authentication API
+  verify_2fa: clientId/applicationId + encrypted payload in the request body; /user/reset-profile uses a per-application Authorization header token
+  oidc: Verify OIDC integration is a standard OIDC provider (issuer https://verify.typingdna.com, PKCE S256)
+  docs: https://api.typingdna.com/docs/index.html
+  detail: authentication/typingdna-authentication.yml
+
+idempotency:
+  supported: false
+  note: >-
+    No Idempotency-Key header or equivalent retry contract is documented.
+    Related but distinct: replay-attack protection — identical typing
+    patterns are rejected by design on /save, and identical-pattern
+    acceptance on /verify is a dashboard setting.
+
+pagination:
+  style: none
+  note: No list endpoints; all operations act on a single user id.
+
+request_ids:
+  supported: false
+  note: No request-id/trace header is documented; API responses carry message_code integers instead.
+
+versioning:
+  scheme: none-published
+  current_spec_version: 2.3.0 (info.version of the published OpenAPI)
+  note: No URI/header versioning or deprecation policy is published for the REST API.
+  detail: lifecycle/typingdna-lifecycle.yml
+
+error_envelope:
+  media_type: application/json
+  rfc9457: false
+  shape: '{ "success": 0|1, "status": <http code>, "message": "...", "message_code": <int> }'
+  guidance: Handle responses by message_code, not by message string (docs recommendation).
+  detail: errors/typingdna-problem-types.yml
+
+rate_limits:
+  signal_status: 429
+  documented_limits:
+    - Message code 43 — maximum accepted request number per IP address exceeded.
+    - Message code 37 — concurrent plan limit reached.
+    - Message code 52 — account request throughput limitation reached.
+    - HTTP 447/452 — maximum request size exceeded.
+  note: Numeric ceilings are plan-based and not published.
+
+domain_semantics:
+  pattern_types:
+    - 0 anytext (random typed text, ~120-180 chars)
+    - 1 sametext (identical enrollment/verification text)
+    - 2 extended (recommended; records typed characters too)
+  quality_param:
+    values: {1: optimize for UX (lower FRR), 2: recommended balance (lowest EER), 3: optimize for security (lower FAR)}
+    applies_to: [/verify, /match]
+  auto_enroll: >-
+    Patterns submitted to /verify are enrolled when score >= Score Threshold
+    and previous enrollments >= Minimum Initial Enrollments (dashboard
+    settings); /auto coordinates enroll-vs-verify automatically.
+  mobile: Mobile and desktop patterns are never matched against each other; mobile patterns are compared per typing position (ids 1-6).

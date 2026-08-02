@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: searched
+source: https://verify.typingdna.com/.well-known/openid-configuration
+docs: https://verify.typingdna.com/docs/
+note: >-
+  The Authentication API itself is HTTP Basic (apiKey/apiSecret) and has no
+  OAuth scope surface. The scopes below belong to the Verify 2FA OIDC
+  integration, whose live discovery document is captured in
+  well-known/typingdna-verify-openid-configuration.json.
+schemes:
+  - name: Verify 2FA OIDC
+    type: openIdConnect
+    issuer: https://verify.typingdna.com
+    source: well-known/typingdna-verify-openid-configuration.json
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://verify.typingdna.com/oidc/auth
+        tokenUrl: https://verify.typingdna.com/oidc/token
+      - flow: refreshToken
+        tokenUrl: https://verify.typingdna.com/oidc/token
+      - flow: deviceCode
+        grant: urn:ietf:params:oauth:grant-type:device_code
+      - flow: jwtBearer
+        grant: urn:ietf:params:oauth:grant-type:jwt-bearer
+scopes:
+  - scope: openid
+    description: OpenID Connect authentication; returns the id_token (RS256) asserting the typing-biometrics verification.
+    flows: [authorizationCode]
+    sources: [well-known/typingdna-verify-openid-configuration.json]
+  - scope: email
+    description: 'Release the email claims (email, email_verified) in the id_token/userinfo.'
+    flows: [authorizationCode]
+    sources: [well-known/typingdna-verify-openid-configuration.json]
+  - scope: profile
+    description: 'Release profile claims (name, given_name, family_name, locale, picture) in the id_token/userinfo.'
+    flows: [authorizationCode]
+    sources: [well-known/typingdna-verify-openid-configuration.json]

@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: searched
+probe: true
+source: https://www.typingdna.com/about
+url: https://www.typingdna.com/about
+certifications:
+- ISO 27001
+- ISO 27017
+- ISO 27018
+evidence:
+- source: https://www.typingdna.com/about
+  quote: >-
+    "TypingDNA fulfills high standards of information, and security
+    management (ISO 27001), information security for cloud services
+    (ISO 27017), and the protection of Personally Identifiable Information
+    (PII) in line with the privacy principles (ISO 27018)."
+- source: https://www.typingdna.com/pricing/auth-api
+  quote: '"TypingDNA is certified for ISO 27001, ISO 27017, and ISO 27018."'
+note: >-
+  The automated probe also keyword-matched "SOC 2" and "HIPAA" on the about
+  page, but in context those belong to the "HIPAA/SOC2 for remote workforce"
+  customer use-case navigation, not to TypingDNA's own certification claims —
+  they are excluded here. No dedicated trust-center subdomain exists; the
+  about and pricing pages carry the published posture.

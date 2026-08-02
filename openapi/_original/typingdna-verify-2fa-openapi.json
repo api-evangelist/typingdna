@@ -1,0 +1,728 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "TypingDNA - Verify 2FA Documentation",
+    "description": "Verify is a complete 2FA service designed to reduce reliance on traditional SMS and Email 2FA methods in the user authentication process. A Verify 2FA integration allows you to offer typing verification as a second factor in flows where traditional 2FA methods would otherwise have been required.\n\nWith Verify 2FA, end-users prove their identity by typing generated texts, only deferring to Root of Trust (RoT) channels (SMS & Email) when strictly necessary.\n\nThe goal of Verify 2FA is to offer the best experience to end-users while reducing the costs typically associated with sending 2FA codes.\nSome useful links:\n- [Verify 2FA API Documentation](https://verify.typingdna.com/docs/)\n- [Sign Up For a Free Account](https://www.typingdna.com/clients/signup)",
+    "version": "1.1.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about TypingDNA",
+    "url": "https://typingdna.com"
+  },
+  "servers": [
+    {
+      "url": "https://verify.typingdna.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "standard",
+      "description": "Main routes",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://verify.typingdna.com/docs/#api-API_Services"
+      }
+    },
+    {
+      "name": "optional",
+      "description": "Optional routes"
+    }
+  ],
+  "paths": {
+    "/otp/validate": {
+      "post": {
+        "tags": [
+          "standard"
+        ],
+        "summary": "Validate the OTP the user has submitted",
+        "description": "The /otp/validate endpoint is used to validate the OTP the user has submitted. The method uses the TypingDNA code validation service and returns either a success or failure. Upon a successful code validation, the end-user is considered verified. Note: Implementing this endpoint is mandatory for flow completion, even when disableRoT was set to true.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OtpValidateBody"
+              },
+              "example": {
+                "clientId": "a46b03d7c7e30122fda3ad721cb0757f",
+                "applicationId": "3c42621c2a6b18b789be8ef0f25bd732",
+                "payload": "0d138ccacaafdef6bb3c637eced5e83bd895a08e90383f49bc9db56243680b98960e1668f6e19be4656bbd4be486d35533870ec86d47ef725b5a93b951f2c2d479ff907bd99c53a4847d489806cd4e1b",
+                "code": 441567
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OtpValidateResponse"
+                },
+                "examples": {
+                  "OTP given matches": {
+                    "value": {
+                      "success": 1,
+                      "status": 200,
+                      "code": 19,
+                      "message": "OTP given matches"
+                    }
+                  },
+                  "User reached maximum OTP": {
+                    "value": {
+                      "success": 0,
+                      "status": 200,
+                      "code": 12,
+                      "message": "User reached maximum OTP attempts and cannot do authentication. Try later."
+                    }
+                  },
+                  "OTP given invalid or expired": {
+                    "value": {
+                      "success": 0,
+                      "status": 200,
+                      "code": 10,
+                      "message": "OTP given invalid or expired"
+                    }
+                  },
+                  "Too many failed attempts. Please try later": {
+                    "value": {
+                      "success": 0,
+                      "status": 200,
+                      "code": 11,
+                      "message": "Too many failed attempts. Please try later"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageCode"
+                },
+                "examples": {
+                  "Bad Request": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 101,
+                      "message": "Bad request"
+                    }
+                  },
+                  "Invalid client id": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 105,
+                      "message": "Invalid client id"
+                    }
+                  },
+                  "Invalid application id": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 106,
+                      "message": "Invalid application id"
+                    }
+                  },
+                  "Missing user identifier": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 109,
+                      "message": "Missing user identifier"
+                    }
+                  },
+                  "Request has expired": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 108,
+                      "message": "Request has expired"
+                    }
+                  },
+                  "SMS gateway not found": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 129,
+                      "message": "SMS gateway not found."
+                    }
+                  },
+                  "Email gateway not found.": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 132,
+                      "message": "Email gateway not found."
+                    }
+                  },
+                  "Invalid or missing phone number": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 112,
+                      "message": "Invalid or missing phone number"
+                    }
+                  },
+                  "Invalid or missing email address": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 111,
+                      "message": "Invalid or missing email address"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageCode"
+                },
+                "examples": {
+                  "Operation not allowed": {
+                    "value": {
+                      "success": 0,
+                      "status": 401,
+                      "code": 126,
+                      "message": "Operation not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageCode"
+                },
+                "examples": {
+                  "Internal Server Error": {
+                    "value": {
+                      "success": 0,
+                      "status": 500,
+                      "code": 107,
+                      "message": "Internal Server Error"
+                    }
+                  },
+                  "Error validating OTP": {
+                    "value": {
+                      "success": 0,
+                      "status": 500,
+                      "code": 116,
+                      "message": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/reset-profile": {
+      "post": {
+        "tags": [
+          "optional"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "A unique basic authentication token specific to each application. This token can be obtained from the Verify Dashboard by selecting your application and navigating to the Reset Profile endpoint section.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "description": "The Reset Profile endpoint (/user/reset-profile for Standard integrations or /oidc/webhook/reset-profile for OIDC integrations) enables the deletion of a user's typing patterns and profile reset. To access the required endpoint URL and Authorization token, navigate to the TypingDNA Verify Dashboard, select your application, and locate the Reset Profile endpoint section. Upon successful deletion, the endpoint returns the count of deleted patterns.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUserBody"
+              },
+              "example": {
+                "user_id": "john.doe@company.com"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "ResetProfileBasicAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserResponse"
+                },
+                "examples": {
+                  "Done": {
+                    "value": {
+                      "success": 1,
+                      "deleted": 3,
+                      "message": "Done"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserResponse"
+                },
+                "examples": {
+                  "identifier missing": {
+                    "value": {
+                      "success": 0,
+                      "message": "identifier missing"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserResponse"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "value": {
+                      "success": 0,
+                      "message": "unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserResponse"
+                },
+                "examples": {
+                  "internal server error": {
+                    "value": {
+                      "success": 0,
+                      "message": "internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/otp/send": {
+      "post": {
+        "tags": [
+          "optional"
+        ],
+        "description": "The /otp/send endpoint manually triggers the sending of a verification code to the user\u2019s email or phone. This bypasses the Verify window\u2019s typing verification flow, and is useful for scenarios in which users cannot type to confirm their identity, such as access via a mobile device. Available only if RoT is enabled (default).",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendOtpBody"
+              },
+              "example": {
+                "clientId": "a46b03d7c7e30122fda3ad721cb0757f",
+                "applicationId": "3c42621c2a6b18b789be8ef0f25bd732",
+                "payload": "0d138ccacaafdef6bb3c637eced5e83bd895a08e90383f49bc9db56243680b98960e1668f6e19be4656bbd4be486d35533870ec86d47ef725b5a93b951f2c2d479ff907bd99c53a4847d489806cd4e1b"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendOtpResponse"
+                },
+                "examples": {
+                  "OTP given matches": {
+                    "value": {
+                      "success": 1,
+                      "status": 200,
+                      "code": 9,
+                      "message": "OTP sent",
+                      "otp": 270015
+                    }
+                  },
+                  "Too many OTP attempts sent": {
+                    "value": {
+                      "success": 1,
+                      "status": 200,
+                      "code": 13,
+                      "message": "Too many OTP attempts sent. Please try later.",
+                      "limitedUntil": "1620379408000"
+                    }
+                  },
+                  "Could not send OTP": {
+                    "value": {
+                      "success": 1,
+                      "status": 200,
+                      "code": 26,
+                      "message": "Could not send OTP. Provider error."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageCode"
+                },
+                "examples": {
+                  "Bad request": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 101,
+                      "message": "Bad request"
+                    }
+                  },
+                  "Invalid client id": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 105,
+                      "message": "Invalid client id"
+                    }
+                  },
+                  "Invalid application id": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 105,
+                      "message": "Invalid application id"
+                    }
+                  },
+                  "Missing user identifier": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 109,
+                      "message": "Missing user identifier"
+                    }
+                  },
+                  "Request has expired": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 108,
+                      "message": "Request has expired"
+                    }
+                  },
+                  "SMS gateway not found": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 129,
+                      "message": "SMS gateway not found."
+                    }
+                  },
+                  "Email gateway not found": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 132,
+                      "message": "Email gateway not found."
+                    }
+                  },
+                  "Invalid or missing phone number": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 112,
+                      "message": "Invalid or missing phone number"
+                    }
+                  },
+                  "Invalid or missing email address": {
+                    "value": {
+                      "success": 0,
+                      "status": 400,
+                      "code": 111,
+                      "message": "Invalid or missing email address"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageCode"
+                },
+                "examples": {
+                  "Operation not allowed": {
+                    "value": {
+                      "success": 0,
+                      "status": 401,
+                      "code": 126,
+                      "message": "Operation not allowed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageCode"
+                },
+                "examples": {
+                  "Operation not allowed": {
+                    "value": {
+                      "success": 0,
+                      "status": 500,
+                      "code": 107,
+                      "message": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ResetProfileBasicAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Authorization token required for the /user/reset-profile endpoint. Obtain this from the TypingDNA Verify Dashboard under your application's Reset Profile endpoint section."
+      }
+    },
+    "schemas": {
+      "OtpValidateBody": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string",
+            "description": "The client id found in your TypingDNA Verify dashboard."
+          },
+          "applicationId": {
+            "type": "string",
+            "description": "The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard."
+          },
+          "payload": {
+            "type": "string",
+            "description": "An AES-256-CBC encrypted JSON string containing the user identifier used during flow initialization. The JSON structure is: { \"email\": \"userEmail\", \"phoneNumber\": \"userPhoneNumberWithCountryCode\", \"id\": \"userIdentifierWithoutRot\" }. The encryption is using a Pbkdf2 key (with the client secret as password and the application id as salt), SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes."
+          },
+          "code": {
+            "type": "string",
+            "description": "Is the OTP code the user sent."
+          }
+        },
+        "required": [
+          "clientId",
+          "applicationId",
+          "payload",
+          "code"
+        ]
+      },
+      "OtpValidateResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "integer",
+            "example": 200,
+            "description": "Return 1 for success and 0 for failure."
+          },
+          "code": {
+            "type": "integer",
+            "example": 19,
+            "description": "Response code."
+          },
+          "message": {
+            "type": "string",
+            "example": "OTP given matches",
+            "description": "Status message, typically OTP given matches."
+          },
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "HTTP status code."
+          }
+        },
+        "required": [
+          "success",
+          "code",
+          "message",
+          "status"
+        ]
+      },
+      "DeleteUserBody": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "example": "john.doe@gmail.com",
+            "description": "The user identifier used (email, phone number or id)."
+          }
+        },
+        "required": [
+          "user_id"
+        ]
+      },
+      "DeleteUserResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "integer",
+            "example": 1,
+            "description": "Return 1 for success and 0 for failure."
+          },
+          "deleted": {
+            "type": "integer",
+            "example": 3,
+            "description": "The number of patterns deleted, if success is 1"
+          },
+          "message": {
+            "type": "string",
+            "example": "Done",
+            "description": "Status message, typically Done"
+          }
+        },
+        "required": [
+          "success",
+          "message"
+        ]
+      },
+      "SendOtpBody": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string",
+            "description": "The client id found in your TypingDNA Verify dashboard."
+          },
+          "applicationId": {
+            "type": "string",
+            "description": "The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard."
+          },
+          "payload": {
+            "type": "string",
+            "description": "Is an AES-256-CBC encrypted string using a Pbkdf2 key (with the client secret used as the password, and the application id as the salt), of the JSON with the following structure: { \"email\": \"userEmail\", \"phoneNumber\": \"userPhoneNumberWithCountryCode\" }. We recomend to only use one of the user identifiers, either email or phone, as the other one will be disregarded. The Pbkdf2 key uses SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes."
+          }
+        },
+        "required": [
+          "clientId",
+          "applicationId",
+          "payload"
+        ]
+      },
+      "SendOtpResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "integer",
+            "example": 200,
+            "description": "Return 1 for success and 0 for failure."
+          },
+          "code": {
+            "type": "integer",
+            "example": 19,
+            "description": "Response code."
+          },
+          "message": {
+            "type": "string",
+            "example": "OTP given matches",
+            "description": "Status message, typically OTP given matches."
+          },
+          "status": {
+            "type": "integer",
+            "example": 200,
+            "description": "HTTP status code."
+          },
+          "otp": {
+            "type": "integer",
+            "example": 455105,
+            "description": "The OTP code sent to the user."
+          }
+        },
+        "required": [
+          "success",
+          "code",
+          "message",
+          "status"
+        ]
+      },
+      "MessageCode": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "integer",
+            "example": 0,
+            "description": "Return 0 for failure."
+          },
+          "status": {
+            "type": "string",
+            "description": "Http status code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error description"
+          },
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          }
+        },
+        "required": [
+          "success",
+          "code",
+          "message",
+          "status"
+        ]
+      }
+    }
+  }
+}

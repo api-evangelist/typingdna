@@ -1,0 +1,18 @@
+{
+  "provider": "typingdna",
+  "sources": [
+    "typingdna-advanced-api-openapi.yml",
+    "typingdna-optional-api-openapi.yml",
+    "typingdna-standard-api-openapi.yml"
+  ],
+  "outputs": [
+    "typingdna-advanced-api-openapi.yml",
+    "typingdna-optional-api-openapi.yml",
+    "typingdna-standard-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

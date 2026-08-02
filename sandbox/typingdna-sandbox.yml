@@ -1,0 +1,43 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://verify.typingdna.com/docs (Environments, Sign up, Configure your
+  account sections) and https://www.typingdna.com/pricing/auth-api (Starter
+  plan FAQ). Published values only; TypingDNA does not publish magic test
+  values or test credentials.
+description: >-
+  TypingDNA's test-vs-live separation. The Authentication API offers a free
+  Starter tier that acts as the developer sandbox; Verify 2FA ships an
+  explicit Sandbox environment per account, separate from Production.
+authentication_api:
+  sandbox_model: free-tier
+  tier: Starter (free)
+  limits:
+    users_per_month: 100
+  signup: https://www.typingdna.com/clients/signup
+  credentials: apiKey + apiSecret issued in the client dashboard (same API hosts as paid tiers).
+  hosts:
+    - https://api.typingdna.com
+    - https://eu-api.typingdna.com
+    - https://us-api.typingdna.com
+verify_2fa:
+  sandbox_model: per-account environment
+  environments:
+    - name: Sandbox
+      default: true
+      purpose: Familiarization and testing; limited bandwidth.
+      limits:
+        users_per_month: 100
+        included_otp_codes: 200
+      note: >-
+        After the first 200 OTP codes, a Twilio (SMS) and/or Sendgrid (email)
+        gateway account must be connected in the Verify Dashboard for RoT
+        flows to keep working.
+    - name: Production
+      default: false
+      purpose: Live applications.
+      availability: Pro and Enterprise accounts only.
+  credential_separation: Client ID / Application ID / Secret differ between Sandbox and Production environments.
+test_values:
+  published: false
+  note: No public magic test identifiers, test cards, or fixture tooling are documented.

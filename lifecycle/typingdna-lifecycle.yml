@@ -1,0 +1,27 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://www.typingdna.com/pricing/auth-api (SLA FAQ, deployment options) and
+  https://status.typingdna.com (live Atlassian Statuspage, verified 200 on
+  2026-07-21). No versioning or deprecation policy is published.
+versioning:
+  scheme: none-published
+  current: '2.3.0'
+  note: >-
+    The published OpenAPI (swagger-file.json) carries info.version 2.3.0 for
+    the Authentication API and 1.1.0 for Verify 2FA; endpoints are unversioned
+    paths (no /v1). A legacy Swagger 2.0 file (v1.0.0, Azure host) is still
+    served at https://api.typingdna.com/swagger.json.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No deprecation policy or RFC 8594 Sunset support is documented.
+status_page: https://status.typingdna.com
+sla:
+  starter_pro: Limited SLA (see Standard Service Terms, https://www.typingdna.com/legal/authentication-API-standard-service-terms).
+  enterprise: Full SLA with availability commitments depending on deployment (public cloud, private cloud single-tenant, or on-premises).
+deployment_options:
+  - Public cloud (shared) — EU (eu-api.typingdna.com) or US (us-api.typingdna.com)
+  - Private cloud (single-tenant) — Enterprise
+  - On-premises — Enterprise
+deprecated_operations: []

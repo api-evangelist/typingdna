@@ -1,0 +1,52 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://www.typingdna.com/pricing/auth-api (security FAQ: ISO certifications,
+  TLS, basic auth), https://verify.typingdna.com/.well-known/openid-configuration
+  (live OIDC discovery), and the published OpenAPI 3.0.3 specs.
+standards:
+  - id: oidc
+    conforms: true
+    evidence: >-
+      Verify 2FA OIDC integration is a working OpenID Connect provider —
+      live discovery document at
+      https://verify.typingdna.com/.well-known/openid-configuration
+      (RS256 id tokens, PKCE S256, device_code and jwt-bearer grants);
+      marketed for Okta, Ping Identity and Microsoft Entra ID.
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      The Verify OIDC token endpoint supports authorization_code,
+      refresh_token, device_code and jwt-bearer OAuth 2.0 grants
+      (client_secret_post/client_secret_basic).
+  - id: http-basic-auth
+    conforms: true
+    evidence: Authentication API uses HTTP Basic over HTTPS (apiKey/apiSecret) — securityScheme basic_auth in the published OpenAPI.
+  - id: iso-27001
+    conforms: true
+    evidence: '"TypingDNA is certified for ISO 27001, ISO 27017, and ISO 27018" — pricing FAQ, https://www.typingdna.com/pricing/auth-api.'
+  - id: iso-27017
+    conforms: true
+    evidence: Published certification claim on https://www.typingdna.com/pricing/auth-api.
+  - id: iso-27018
+    conforms: true
+    evidence: Published certification claim on https://www.typingdna.com/pricing/auth-api.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a proprietary {success, status, message, message_code} JSON envelope, not application/problem+json.
+  - id: fapi
+    conforms: false
+    evidence: No FAPI conformance claim published.
+  - id: scim
+    conforms: false
+    evidence: No SCIM user-provisioning surface published.
+  - id: json-api
+    conforms: false
+    evidence: Responses are plain JSON objects, not JSON:API documents.
+  - id: psd2-sca
+    conforms: partial
+    evidence: >-
+      Typing biometrics is marketed as an SCA "inherence" factor for PSD2 /
+      3-D Secure use cases (https://www.typingdna.com/use-cases/3d-secure-psd2.html);
+      this is a use-case claim, not a certified PSD2 API standard (no Berlin
+      Group/STET interface published).

@@ -1,0 +1,15 @@
+generated: '2026-07-21'
+method: generated
+source: >-
+  Packaged Agent Skills generated from TypingDNA's published OpenAPI specs +
+  docs. The provider specs ship no operationIds, so operations are referenced
+  by method + path (each verified verbatim in the referenced spec).
+skills:
+  - file: typingdna-enroll-and-verify.md
+    name: Enroll a user and verify their typing pattern
+    api: openapi/typingdna-authentication-api-openapi-original.json
+    operations: ['POST /auto/{id}', 'GET /user/{id}', 'POST /save/{id}', 'POST /verify/{id}']
+  - file: typingdna-verify-2fa-flow.md
+    name: Add Verify 2FA typing verification to a login
+    api: openapi/typingdna-verify-2fa-openapi.json
+    operations: ['POST /otp/validate', 'POST /otp/send', 'POST /user/reset-profile']

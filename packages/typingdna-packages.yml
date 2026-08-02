@@ -1,0 +1,87 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  npm registry search for "typingdna" (registry.npmjs.org) cross-checked
+  against the TypingDNA GitHub org (github.com/TypingDNA). PyPI, Packagist,
+  NuGet, RubyGems, crates.io and pkg.go.dev were searched and hold no
+  first-party TypingDNA packages; Maven Central only carries a third-party
+  WSO2 conditional-auth connector.
+packages:
+  - language: javascript
+    registry: npm
+    name: typingdna-verify-client
+    url: https://www.npmjs.com/package/typingdna-verify-client
+    install: npm install typingdna-verify-client
+    repository: https://github.com/TypingDNA/TypingDNA-Verify-Client
+    description: Backend client for the TypingDNA Verify 2FA product (getDataAttributes, validateOTP, sendOTP).
+    official: true
+  - language: javascript
+    registry: npm
+    name: typingdnaclient
+    url: https://www.npmjs.com/package/typingdnaclient
+    install: npm install typingdnaclient
+    repository: https://github.com/TypingDNA/TypingDnaClient-NodeJs
+    description: Node.js client for the TypingDNA Authentication API.
+    official: true
+  - language: javascript
+    registry: npm
+    name: typingdnarecorder-react-native
+    url: https://www.npmjs.com/package/typingdnarecorder-react-native
+    install: npm install typingdnarecorder-react-native
+    repository: https://github.com/TypingDNA/TypingDNARecorder-ReactNative
+    description: React Native recorder for capturing typing patterns on mobile.
+    official: true
+  - language: javascript
+    registry: github
+    name: TypingDnaRecorder-JavaScript
+    url: https://github.com/TypingDNA/TypingDnaRecorder-JavaScript
+    install: 'Include https://api.typingdna.com/scripts/typingdna.js (or the minified build) or self-host the class.'
+    description: Open source (Apache 2.0) browser recorder class (typingdna.js) for capturing typing patterns.
+    official: true
+  - language: java
+    registry: github
+    name: TypingDnaRecorder-Java
+    url: https://github.com/TypingDNA/TypingDnaRecorder-Java
+    install: Clone from GitHub (not published to Maven Central).
+    description: Java recorder for capturing typing patterns on desktop.
+    official: true
+  - language: java
+    registry: github
+    name: TypingDNARecorder-Android
+    url: https://github.com/TypingDNA/TypingDNARecorder-Android
+    install: Clone from GitHub (not published to Maven Central).
+    description: Android recorder SDK (captures typing + motion sensor data).
+    official: true
+  - language: swift
+    registry: github
+    name: TypingDNARecorder-iOS
+    url: https://github.com/TypingDNA/TypingDNARecorder-iOS
+    install: Clone from GitHub (not published to CocoaPods/SPM registries).
+    description: iOS/Swift recorder SDK (captures typing + motion sensor data).
+    official: true
+  - language: csharp
+    registry: github
+    name: TypingDNA-Verify-Client (C#)
+    url: https://github.com/TypingDNA/TypingDNA-Verify-Client
+    install: Clone from GitHub (not published to NuGet).
+    description: C# variant of the Verify 2FA backend client; docs note PHP/Python/Ruby variants in progress.
+    official: true
+third_party:
+  - language: javascript
+    registry: npm
+    name: typingdnaclient-rxjs
+    url: https://www.npmjs.com/package/typingdnaclient-rxjs
+    description: Community RxJS wrapper for the TypingDNA Authentication API (aerabi).
+    official: false
+  - language: javascript
+    registry: npm
+    name: typingdna-recorder
+    url: https://www.npmjs.com/package/typingdna-recorder
+    description: Community TypeScript packaging of the JS recorder (aerabi).
+    official: false
+  - language: java
+    registry: maven
+    name: org.wso2.carbon.identity.conditional.auth.typingdna
+    url: https://central.sonatype.com/search?q=typingdna
+    description: WSO2 Identity Server conditional-auth TypingDNA connector (third-party).
+    official: false

@@ -1,0 +1,33 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the TypingDNA Verify 2FA API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-07-21'
+  method: generated
+  source: openapi/typingdna-verify-2fa-openapi-original.json
+extends: openapi/typingdna-verify-2fa-openapi.json
+x-note: >-
+  The provider-published swagger-file.json is not strictly valid JSON
+  (trailing commas and unquoted keys in inline examples). The verbatim file is
+  kept as typingdna-verify-2fa-openapi-original.json; this overlay extends the
+  minimally repaired, parseable copy typingdna-verify-2fa-openapi.json.
+actions:
+  - target: $.paths['/otp/validate'].post
+    update:
+      operationId: validateOtp
+  - target: $.paths['/otp/send'].post
+    update:
+      operationId: sendOtp
+  - target: $.paths['/user/reset-profile'].post
+    update:
+      operationId: resetProfile
+  - target: $.info
+    update:
+      x-apievangelist:
+        provider: typingdna
+        artifacts:
+          errors: errors/typingdna-problem-types.yml
+          sandbox: sandbox/typingdna-sandbox.yml
+          scopes: scopes/typingdna-scopes.yml
+          oidc_discovery: well-known/typingdna-verify-openid-configuration.json
