@@ -94,6 +94,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/typingdna-authentication-api-overlay.yaml
 - type: TrustCenter
   url: security/typingdna-trust-center.yml
 - type: DomainSecurity
