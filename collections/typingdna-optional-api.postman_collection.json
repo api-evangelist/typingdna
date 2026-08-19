@@ -1,0 +1,1319 @@
+{
+  "item": [
+    {
+      "id": "6cbc0a87-33c6-4803-abdb-230b27102b23",
+      "name": "optional",
+      "description": {
+        "content": "Optional routes",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fb787195-39de-4860-bcbf-b80c63f40c9f",
+          "name": "Change user identifier",
+          "request": {
+            "name": "Change user identifier",
+            "description": {
+              "content": "This can be used to change the name that identifies an already existent user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "changeuser",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "newuserid",
+                  "value": "<string>",
+                  "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                },
+                {
+                  "disabled": false,
+                  "key": "custom_field",
+                  "value": "<string>",
+                  "description": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "872f2093-3f77-4a04-9380-cbe1199ce7d6",
+              "name": "Successful operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 200,\n  \"message\": \"Done\",\n  \"message_code\": 1,\n  \"success\": 1,\n  \"custom_field\": \"my_custom_identifier\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3048bf65-1436-42f5-950d-2fd770526af1",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Bad request\",\n  \"message\": \"Invalid parameter in request body: Syntax error.\",\n  \"message_code\": 31,\n  \"status\": 400\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ee9e1b8-b472-4217-a407-b12a4a8dd87e",
+              "name": "Not authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Not authenticated\",\n  \"message\": \"apiKey/apiSecret combination is invalid\",\n  \"message_code\": 32,\n  \"status\": 401\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83d1a33b-c84b-457e-af52-58ba6f45b92a",
+              "name": "Method not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Method not allowed\",\n  \"message\": \"The method received in the request is known but not supported by the target resource\",\n  \"message_code\": 34,\n  \"status\": 405\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b3d8c2b-0671-43f6-9d7f-ec98586f794b",
+              "name": "Invalid user id",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "No Response",
+              "code": 444,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Invalid user id\",\n  \"message\": \"Invalid parameter user id (should be between 6 and 256 characters long and a hash or id instead of an email or phone number)\",\n  \"message_code\": 35,\n  \"status\": 444\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2af5d3ce-fe92-428a-990f-3a825c219249",
+              "name": "Server maintenance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Server maintenance\",\n  \"message\": \"The server is inactive for maintenance.\",\n  \"message_code\": 45,\n  \"status\": 451\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79f90fd8-aab1-4324-abe6-195d4183f500",
+              "name": "Maximum request size exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "code": 452,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Maximum request number exceeded\",\n  \"message\": \"You have exceeded the maximum accepted request number for this IP address.\",\n  \"message_code\": 43,\n  \"status\": 452\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a0ed5af-0fa5-4745-b07b-ee7211e69600",
+              "name": "User id already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "code": 455,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"User id already exists\",\n  \"message\": \"New user id cannot be set since it's already used\",\n  \"message_code\": 50,\n  \"status\": 455\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c87d0642-df22-4837-af03-9968b3409f97",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Internal server error\",\n  \"message\": \"The server encountered an internal error or misconfiguration and was unable to complete your request. If the problem persists please contact us at support@typingdna.com .\",\n  \"message_code\": 48,\n  \"status\": 500\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86d7bb1d-6d3d-45a1-8ad4-2f03bd769d4a",
+              "name": "Service unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "changeuser",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).",
+                        "type": "text/plain"
+                      },
+                      "key": "newuserid",
+                      "value": "ac798b8221ab846a2847035bdf5c00fe"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.",
+                        "type": "text/plain"
+                      },
+                      "key": "custom_field",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Service unavailable\",\n  \"message\": \"The server is currently unable to handle the request due to a temporary condition. If the problem persists please contact us at support@typingdna.com .\",\n  \"message_code\": 49,\n  \"status\": 503\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dcd100c0-2be8-4e04-b477-81519c003866",
+          "name": "The Reset Profile endpoint (/user/reset-profile for Standard integrations or /oidc/webhook/reset-profile for OIDC integrations) enables the deletion of a user's typing patterns and profile reset. To access the required endpoint URL and Authorization token, navigate to the TypingDNA Verify Dashboard, select your application, and locate the Reset Profile endpoint section. Upon successful deletion, the endpoint returns the count of deleted patterns.",
+          "request": {
+            "name": "The Reset Profile endpoint (/user/reset-profile for Standard integrations or /oidc/webhook/reset-profile for OIDC integrations) enables the deletion of a user's typing patterns and profile reset. To access the required endpoint URL and Authorization token, navigate to the TypingDNA Verify Dashboard, select your application, and locate the Reset Profile endpoint section. Upon successful deletion, the endpoint returns the count of deleted patterns.",
+            "description": {
+              "content": "The Reset Profile endpoint (/user/reset-profile for Standard integrations or /oidc/webhook/reset-profile for OIDC integrations) enables the deletion of a user's typing patterns and profile reset. To access the required endpoint URL and Authorization token, navigate to the TypingDNA Verify Dashboard, select your application, and locate the Reset Profile endpoint section. Upon successful deletion, the endpoint returns the count of deleted patterns.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "user",
+                "reset-profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c82f3616-6b9a-4ef7-a589-660f6c3df827",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "reset-profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique basic authentication token specific to each application. This token can be obtained from the Verify Dashboard by selecting your application and navigating to the Reset Profile endpoint section.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"john.doe@company.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": 1,\n  \"deleted\": 3,\n  \"message\": \"Done\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cbc6534-f79d-4803-b455-75bc9deba4ec",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "reset-profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique basic authentication token specific to each application. This token can be obtained from the Verify Dashboard by selecting your application and navigating to the Reset Profile endpoint section.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"john.doe@company.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": 0,\n  \"message\": \"identifier missing\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb1ef159-7015-4a7f-9336-fb3b67000c95",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "reset-profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique basic authentication token specific to each application. This token can be obtained from the Verify Dashboard by selecting your application and navigating to the Reset Profile endpoint section.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"john.doe@company.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": 0,\n  \"message\": \"unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "770b1fae-40a2-49a4-96c5-a5333b098a47",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "user",
+                    "reset-profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) A unique basic authentication token specific to each application. This token can be obtained from the Verify Dashboard by selecting your application and navigating to the Reset Profile endpoint section.",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"john.doe@company.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": 0,\n  \"message\": \"internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "866894ee-ceb7-4c98-85bb-6dba9c74ecc5",
+          "name": "The /otp/send endpoint manually triggers the sending of a verification code to the user’s email or phone. This bypasses the Verify window’s typing verification flow, and is useful for scenarios in which users cannot type to confirm their identity, such as access via a mobile device. Available only if RoT is enabled (default).",
+          "request": {
+            "name": "The /otp/send endpoint manually triggers the sending of a verification code to the user’s email or phone. This bypasses the Verify window’s typing verification flow, and is useful for scenarios in which users cannot type to confirm their identity, such as access via a mobile device. Available only if RoT is enabled (default).",
+            "description": {
+              "content": "The /otp/send endpoint manually triggers the sending of a verification code to the user’s email or phone. This bypasses the Verify window’s typing verification flow, and is useful for scenarios in which users cannot type to confirm their identity, such as access via a mobile device. Available only if RoT is enabled (default).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "otp",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clientId\": \"<string>\",\n  \"applicationId\": \"<string>\",\n  \"payload\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1658bc4f-31b8-4efb-958f-31b491b08137",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "otp",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"a46b03d7c7e30122fda3ad721cb0757f\",\n  \"applicationId\": \"3c42621c2a6b18b789be8ef0f25bd732\",\n  \"payload\": \"0d138ccacaafdef6bb3c637eced5e83bd895a08e90383f49bc9db56243680b98960e1668f6e19be4656bbd4be486d35533870ec86d47ef725b5a93b951f2c2d479ff907bd99c53a4847d489806cd4e1b\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": 1,\n  \"status\": 200,\n  \"code\": 9,\n  \"message\": \"OTP sent\",\n  \"otp\": 270015\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1eef32d-09b2-4efc-bf46-7b9493c4e902",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "otp",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"a46b03d7c7e30122fda3ad721cb0757f\",\n  \"applicationId\": \"3c42621c2a6b18b789be8ef0f25bd732\",\n  \"payload\": \"0d138ccacaafdef6bb3c637eced5e83bd895a08e90383f49bc9db56243680b98960e1668f6e19be4656bbd4be486d35533870ec86d47ef725b5a93b951f2c2d479ff907bd99c53a4847d489806cd4e1b\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": 0,\n  \"status\": 400,\n  \"code\": 101,\n  \"message\": \"Bad request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e48704f-b9f2-46b8-9d4d-8ab888422003",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "otp",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"a46b03d7c7e30122fda3ad721cb0757f\",\n  \"applicationId\": \"3c42621c2a6b18b789be8ef0f25bd732\",\n  \"payload\": \"0d138ccacaafdef6bb3c637eced5e83bd895a08e90383f49bc9db56243680b98960e1668f6e19be4656bbd4be486d35533870ec86d47ef725b5a93b951f2c2d479ff907bd99c53a4847d489806cd4e1b\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": 0,\n  \"status\": 401,\n  \"code\": 126,\n  \"message\": \"Operation not allowed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af0b7ee3-4b83-4c19-9682-d1e4aaa5139c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "otp",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"a46b03d7c7e30122fda3ad721cb0757f\",\n  \"applicationId\": \"3c42621c2a6b18b789be8ef0f25bd732\",\n  \"payload\": \"0d138ccacaafdef6bb3c637eced5e83bd895a08e90383f49bc9db56243680b98960e1668f6e19be4656bbd4be486d35533870ec86d47ef725b5a93b951f2c2d479ff907bd99c53a4847d489806cd4e1b\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": 0,\n  \"status\": 500,\n  \"code\": 107,\n  \"message\": \"Internal server error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.typingdna.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dfc42a55-ecde-414a-84f3-bc74dcd918ba",
+    "name": "TypingDNA - Authentication API Documentation advanced optional API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "With [TypingDNA](https://swagger.io) you can recognize users by the way they type on their keyboards (we support both desktop & mobile). Our typing biometrics engine, exposed by a RESTful API, analyzes typing patterns and accurately determines if they are a match with a known, enrolled user.\n\nOur solution is deployed in scenarios in which the identity of a user needs confirmation -- such as enforcing password resets, complimenting primary authentication means with an additional layer of security, or in the place of OTP flows. The API is not constrained to specific use-cases or authentication stacks, and can be incorporated anywhere within your architecture that end-users are typing.\n\nWhere to start? [Sign up](https://www.typingdna.com/clients/signup) for a free Starter account to obtain an _apiKey_ and _apiSecret_, and then follow along with this [getting started tutorial](https://www.typingdna.com/docs/postman-tutorial-auto-authentication-api.html). Demos and sources are available on [GitHub](https://github.com/TypingDNA).\n\nSome useful links:\n- [Authentication API Documentation](https://api.typingdna.com/docs)\n- [Sign Up For a Free Account](https://www.typingdna.com/clients/signup)",
+      "type": "text/plain"
+    }
+  }
+}

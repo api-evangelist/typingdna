@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TypingDNA - Authentication API Documentation advanced API",
+    "version": "2.3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "advanced",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Save typing pattern",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.typingdna.com/save/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "To save/enroll a new user and/or a new typing pattern you have to make the /save request. We recommend saving at least 3 typing patterns per user in order to perform accurate authentications."
+        },
+        {
+          "info": {
+            "name": "Verify a user by its typing pattern",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.typingdna.com/verify/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "The typical flow to record a new typing pattern is to issue a request to the _/save_ endpoint, followed by subsequent requests to the _/verify_ endpoint (the Auto-Enroll setting can combine these steps, explained in the [Guidelines](https://api.typingdna.com/docs/index.html#api-guidelines-auto-enroll)). When sending a pattern for verification it will be compared only to patterns coming from a similar device type (desktop, mobile), and in case of mobile patterns, registered in the same position o"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

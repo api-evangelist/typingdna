@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TypingDNA - Authentication API Documentation advanced optional API",
+    "version": "2.3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "optional",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Change user identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.typingdna.com/changeuser/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html)."
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "This can be used to change the name that identifies an already existent user."
+        },
+        {
+          "info": {
+            "name": "POST /user/reset-profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.typingdna.com/user/reset-profile",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The Reset Profile endpoint (/user/reset-profile for Standard integrations or /oidc/webhook/reset-profile for OIDC integrations) enables the deletion of a user's typing patterns and profile reset. To access the required endpoint URL and Authorization token, navigate to the TypingDNA Verify Dashboard, select your application, and locate the Reset Profile endpoint section. Upon successful deletion, the endpoint returns the count of deleted patterns."
+        },
+        {
+          "info": {
+            "name": "POST /otp/send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.typingdna.com/otp/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "The /otp/send endpoint manually triggers the sending of a verification code to the user’s email or phone. This bypasses the Verify window’s typing verification flow, and is useful for scenarios in which users cannot type to confirm their identity, such as access via a mobile device. Available only if RoT is enabled (default)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
