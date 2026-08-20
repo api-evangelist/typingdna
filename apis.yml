@@ -46,6 +46,8 @@ apis:
   humanURL: https://api.typingdna.com/docs/index.html
   baseURL: https://api.typingdna.com
   tags:
+  - Advanced
+  tags_raw:
   - advanced
   properties:
   - type: OpenAPI
@@ -78,6 +80,8 @@ apis:
   humanURL: https://api.typingdna.com/docs/index.html
   baseURL: https://api.typingdna.com
   tags:
+  - Standard
+  tags_raw:
   - standard
   properties:
   - type: OpenAPI
