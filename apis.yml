@@ -92,7 +92,7 @@ apis:
   humanURL: https://api.typingdna.com/docs/index.html
   baseURL: https://api.typingdna.com
   tags:
-  - Standard
+  - standard
   tags_raw:
   - standard
   properties:
