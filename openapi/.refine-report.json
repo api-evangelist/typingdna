@@ -1,9 +1,8 @@
 {
   "provider": "typingdna",
   "sources": [
-    "typingdna-advanced-api-openapi.yml",
-    "typingdna-optional-api-openapi.yml",
-    "typingdna-standard-api-openapi.yml"
+    "_original/typingdna-authentication-api-openapi-original.json",
+    "_original/typingdna-verify-2fa-openapi-original.json"
   ],
   "outputs": [
     "typingdna-advanced-api-openapi.yml",
@@ -13,6 +12,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "typingdna-authentication-api-openapi-original.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "typingdna-verify-2fa-openapi-original.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'optional' spans 2 source specs (typingdna-authentication-api-openapi-original.json, typingdna-verify-2fa-openapi-original.json): per-path servers applied",
+    "tag 'standard' spans 2 source specs (typingdna-authentication-api-openapi-original.json, typingdna-verify-2fa-openapi-original.json): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/typingdna-verify-2fa-openapi.json: archived document superseded by a larger archived document",
+    "typingdna-advanced-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "typingdna-optional-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "typingdna-standard-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

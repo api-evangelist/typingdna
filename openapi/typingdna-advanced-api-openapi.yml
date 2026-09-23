@@ -1,25 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: TypingDNA - Authentication API Documentation advanced API
-  description: 'With [TypingDNA](https://swagger.io) you can recognize users by the way they type on their keyboards (we support both desktop & mobile). Our typing biometrics engine, exposed by a RESTful API, analyzes typing patterns and accurately determines if they are a match with a known, enrolled user.
-
-
-    Our solution is deployed in scenarios in which the identity of a user needs confirmation -- such as enforcing password resets, complimenting primary authentication means with an additional layer of security, or in the place of OTP flows. The API is not constrained to specific use-cases or authentication stacks, and can be incorporated anywhere within your architecture that end-users are typing.
-
-
-    Where to start? [Sign up](https://www.typingdna.com/clients/signup) for a free Starter account to obtain an _apiKey_ and _apiSecret_, and then follow along with this [getting started tutorial](https://www.typingdna.com/docs/postman-tutorial-auto-authentication-api.html). Demos and sources are available on [GitHub](https://github.com/TypingDNA).
-
-
-    Some useful links:
-
-    - [Authentication API Documentation](https://api.typingdna.com/docs)
-
-    - [Sign Up For a Free Account](https://www.typingdna.com/clients/signup)'
+  title: TypingDNA - Authentication API Documentation Advanced API
+  description: With TypingDNA you can recognize users by the way they type on their keyboards (we support both desktop & mobile).
   version: 2.3.0
 servers:
 - url: https://api.typingdna.com
 tags:
-- name: advanced
+- name: Advanced
   description: Advanced routes for customisation
   externalDocs:
     description: Find out more
@@ -28,7 +15,7 @@ paths:
   /save/{id}:
     post:
       tags:
-      - advanced
+      - Advanced
       summary: Save typing pattern
       description: To save/enroll a new user and/or a new typing pattern you have to make the /save request. We recommend saving at least 3 typing patterns per user in order to perform accurate authentications.
       parameters:
@@ -229,12 +216,14 @@ paths:
                 $ref: '#/components/schemas/ErrorMessageCode'
       security:
       - basic_auth: []
+      operationId: postSaveById
+      x-operation-id-source: derived
   /verify/{id}:
     post:
       tags:
-      - advanced
+      - Advanced
       summary: Verify a user by its typing pattern
-      description: The typical flow to record a new typing pattern is to issue a request to the _/save_ endpoint, followed by subsequent requests to the _/verify_ endpoint (the Auto-Enroll setting can combine these steps, explained in the [Guidelines](https://api.typingdna.com/docs/index.html#api-guidelines-auto-enroll)). When sending a pattern for verification it will be compared only to patterns coming from a similar device type (desktop, mobile), and in case of mobile patterns, registered in the same position of the phone.
+      description: The typical flow to record a new typing pattern is to issue a request to the _/save_ endpoint, followed by subsequent requests to the _/verify_ endpoint (the Auto-Enroll setting can combine these steps, explained in the Guidelines). When sending a pattern for verification it will be compared only to patterns coming from a similar device type (desktop, mobile), and in case of mobile patterns, registered in the same position of the phone.
       parameters:
       - name: id
         in: path
@@ -497,20 +486,10 @@ paths:
                 $ref: '#/components/schemas/ErrorMessageCode'
       security:
       - basic_auth: []
+      operationId: postVerifyById
+      x-operation-id-source: derived
 components:
   schemas:
-    SaveRequestBody:
-      type: object
-      properties:
-        tp:
-          type: string
-          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
-          description: A typing pattern recorded with the TypingDNA JavaScript class.
-        custom_field:
-          type: string
-          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
-      required:
-      - tp
     AuthResponseBody:
       type: object
       properties:
@@ -609,6 +588,18 @@ components:
         status:
           type: integer
           description: Http status code
+    SaveRequestBody:
+      type: object
+      properties:
+        tp:
+          type: string
+          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
+          description: A typing pattern recorded with the TypingDNA JavaScript class.
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - tp
   securitySchemes:
     basic_auth:
       type: http

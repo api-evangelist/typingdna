@@ -1,23 +1,11 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: TypingDNA - Authentication API Documentation advanced optional API
-  description: 'With [TypingDNA](https://swagger.io) you can recognize users by the way they type on their keyboards (we support both desktop & mobile). Our typing biometrics engine, exposed by a RESTful API, analyzes typing patterns and accurately determines if they are a match with a known, enrolled user.
-
-
-    Our solution is deployed in scenarios in which the identity of a user needs confirmation -- such as enforcing password resets, complimenting primary authentication means with an additional layer of security, or in the place of OTP flows. The API is not constrained to specific use-cases or authentication stacks, and can be incorporated anywhere within your architecture that end-users are typing.
-
-
-    Where to start? [Sign up](https://www.typingdna.com/clients/signup) for a free Starter account to obtain an _apiKey_ and _apiSecret_, and then follow along with this [getting started tutorial](https://www.typingdna.com/docs/postman-tutorial-auto-authentication-api.html). Demos and sources are available on [GitHub](https://github.com/TypingDNA).
-
-
-    Some useful links:
-
-    - [Authentication API Documentation](https://api.typingdna.com/docs)
-
-    - [Sign Up For a Free Account](https://www.typingdna.com/clients/signup)'
-  version: 2.3.0
+  title: Typingdna Optional API
+  version: '1.0'
+  description: 'Operations tagged optional across 2 of this provider''s published API definitions: typingdna-authentication-api-openapi-original.json, typingdna-verify-2fa-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.typingdna.com
+- url: https://verify.typingdna.com
 tags:
 - name: optional
   description: Optional routes
@@ -152,6 +140,10 @@ paths:
                 $ref: '#/components/schemas/ErrorMessageCode'
       security:
       - basic_auth: []
+      operationId: postChangeuserById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.typingdna.com
   /user/reset-profile:
     post:
       tags:
@@ -220,6 +212,12 @@ paths:
                   value:
                     success: 0
                     message: internal server error
+      summary: Create user reset profile
+      x-summary-source: derived
+      operationId: postUserResetProfile
+      x-operation-id-source: derived
+    servers:
+    - url: https://verify.typingdna.com
   /otp/send:
     post:
       tags:
@@ -350,8 +348,64 @@ paths:
                     status: 500
                     code: 107
                     message: Internal server error
+      summary: Create otp send
+      x-summary-source: derived
+      operationId: postOtpSend
+      x-operation-id-source: derived
+    servers:
+    - url: https://verify.typingdna.com
 components:
   schemas:
+    ResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        success:
+          type: integer
+          example: 1
+          description: Return 1 for success and 0 for failure.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    ErrorMessageCode:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Error name
+        message:
+          type: string
+          description: Error description
+        message_code:
+          type: integer
+          description: Message code
+        status:
+          type: integer
+          description: Http status code
+    ChangeUserRequestBody:
+      type: object
+      properties:
+        newuserid:
+          type: string
+          example: ac798b8221ab846a2847035bdf5c00fe
+          description: An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - newuserid
     DeleteUserResponse:
       type: object
       properties:
@@ -391,6 +445,31 @@ components:
       - code
       - message
       - status
+    DeleteUserBody:
+      type: object
+      properties:
+        user_id:
+          type: string
+          example: john.doe@gmail.com
+          description: The user identifier used (email, phone number or id).
+      required:
+      - user_id
+    SendOtpBody:
+      type: object
+      properties:
+        clientId:
+          type: string
+          description: The client id found in your TypingDNA Verify dashboard.
+        applicationId:
+          type: string
+          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
+        payload:
+          type: string
+          description: 'Is an AES-256-CBC encrypted string using a Pbkdf2 key (with the client secret used as the password, and the application id as the salt), of the JSON with the following structure: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode" }. We recomend to only use one of the user identifiers, either email or phone, as the other one will be disregarded. The Pbkdf2 key uses SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
+      required:
+      - clientId
+      - applicationId
+      - payload
     SendOtpResponse:
       type: object
       properties:
@@ -419,85 +498,15 @@ components:
       - code
       - message
       - status
-    ChangeUserRequestBody:
-      type: object
-      properties:
-        newuserid:
-          type: string
-          example: ac798b8221ab846a2847035bdf5c00fe
-          description: An anonymized string of your choice that identifies the user on your end (min 6 char, max 256 char). Please note that this string has to be unique and should not be personal information (email address, name, phone number, etc). If you still want to use something like an email address as ID, we suggest sending a salted hash of it. More about data privacy in our [SLA](https://www.typingdna.com/legal/legal.html).
-        custom_field:
-          type: string
-          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
-      required:
-      - newuserid
-    ResponseBody:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 200
-          description: Http status code
-        message:
-          type: string
-          example: Done
-          description: Status message, typically Done.
-        message_code:
-          type: integer
-          example: 1
-          description: Message code
-        success:
-          type: integer
-          example: 1
-          description: Return 1 for success and 0 for failure.
-        custom_field:
-          type: string
-          example: my_custom_identifier
-          description: (optional) Returned only if it has been provided in the request body.
-    SendOtpBody:
-      type: object
-      properties:
-        clientId:
-          type: string
-          description: The client id found in your TypingDNA Verify dashboard.
-        applicationId:
-          type: string
-          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
-        payload:
-          type: string
-          description: 'Is an AES-256-CBC encrypted string using a Pbkdf2 key (with the client secret used as the password, and the application id as the salt), of the JSON with the following structure: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode" }. We recomend to only use one of the user identifiers, either email or phone, as the other one will be disregarded. The Pbkdf2 key uses SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
-      required:
-      - clientId
-      - applicationId
-      - payload
-    DeleteUserBody:
-      type: object
-      properties:
-        user_id:
-          type: string
-          example: john.doe@gmail.com
-          description: The user identifier used (email, phone number or id).
-      required:
-      - user_id
-    ErrorMessageCode:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Error name
-        message:
-          type: string
-          description: Error description
-        message_code:
-          type: integer
-          description: Message code
-        status:
-          type: integer
-          description: Http status code
   securitySchemes:
     basic_auth:
       type: http
       scheme: basic
-externalDocs:
-  description: Find out more about TypingDNA
-  url: https://api.typingdna.com
+    ResetProfileBasicAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Authorization token required for the /user/reset-profile endpoint. Obtain this from the TypingDNA Verify Dashboard under your application's Reset Profile endpoint section.
+x-refined-from:
+- typingdna-authentication-api-openapi-original.json
+- typingdna-verify-2fa-openapi-original.json

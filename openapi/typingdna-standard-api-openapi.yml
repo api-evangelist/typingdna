@@ -1,23 +1,11 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: TypingDNA - Authentication API Documentation advanced standard API
-  description: 'With [TypingDNA](https://swagger.io) you can recognize users by the way they type on their keyboards (we support both desktop & mobile). Our typing biometrics engine, exposed by a RESTful API, analyzes typing patterns and accurately determines if they are a match with a known, enrolled user.
-
-
-    Our solution is deployed in scenarios in which the identity of a user needs confirmation -- such as enforcing password resets, complimenting primary authentication means with an additional layer of security, or in the place of OTP flows. The API is not constrained to specific use-cases or authentication stacks, and can be incorporated anywhere within your architecture that end-users are typing.
-
-
-    Where to start? [Sign up](https://www.typingdna.com/clients/signup) for a free Starter account to obtain an _apiKey_ and _apiSecret_, and then follow along with this [getting started tutorial](https://www.typingdna.com/docs/postman-tutorial-auto-authentication-api.html). Demos and sources are available on [GitHub](https://github.com/TypingDNA).
-
-
-    Some useful links:
-
-    - [Authentication API Documentation](https://api.typingdna.com/docs)
-
-    - [Sign Up For a Free Account](https://www.typingdna.com/clients/signup)'
-  version: 2.3.0
+  title: Typingdna Standard API
+  version: '1.0'
+  description: 'Operations tagged standard across 2 of this provider''s published API definitions: typingdna-authentication-api-openapi-original.json, typingdna-verify-2fa-openapi-original.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.typingdna.com
+- url: https://verify.typingdna.com
 tags:
 - name: standard
   description: Main routes
@@ -293,6 +281,10 @@ paths:
                 $ref: '#/components/schemas/ErrorMessageCode'
       security:
       - basic_auth: []
+      operationId: postAutoById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.typingdna.com
   /user/{id}:
     get:
       tags:
@@ -459,6 +451,8 @@ paths:
                 $ref: '#/components/schemas/ErrorMessageCode'
       security:
       - basic_auth: []
+      operationId: getUserById
+      x-operation-id-source: derived
     delete:
       tags:
       - standard
@@ -634,6 +628,10 @@ paths:
                 $ref: '#/components/schemas/ErrorMessageCode'
       security:
       - basic_auth: []
+      operationId: deleteUserById
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.typingdna.com
   /otp/validate:
     post:
       tags:
@@ -776,21 +774,12 @@ paths:
                     status: 500
                     code: 116
                     message: Internal Server Error
+      operationId: postOtpValidate
+      x-operation-id-source: derived
+    servers:
+    - url: https://verify.typingdna.com
 components:
   schemas:
-    AuthRequestBody:
-      type: object
-      properties:
-        tp:
-          type: string
-          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
-          description: A typing pattern recorded with the TypingDNA JavaScript class. For dual pass or to submit multiple patterns for enrollment, submit typing patterns separated by _;_. _Dual pass = if the user verification has been rejected the first time, we recommend recording a new typing pattern and send both typing patterns concatenated with ; the second time. In some cases this will improve the verification of a user’s identity, in other cases doing a new authentication with a completely new typing pattern may be desired._
-        custom_field:
-          type: string
-          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
-      required:
-      - id
-      - tp
     AuthResponseBody:
       type: object
       properties:
@@ -826,71 +815,46 @@ components:
           type: string
           example: my_custom_identifier
           description: (optional) Returned only if it has been provided in the request body.
-    MessageCode:
+    AuthRequestBody:
       type: object
       properties:
-        success:
-          type: integer
-          example: 0
-          description: Return 0 for failure.
-        status:
+        tp:
           type: string
+          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
+          description: A typing pattern recorded with the TypingDNA JavaScript class. For dual pass or to submit multiple patterns for enrollment, submit typing patterns separated by _;_. _Dual pass = if the user verification has been rejected the first time, we recommend recording a new typing pattern and send both typing patterns concatenated with ; the second time. In some cases this will improve the verification of a user’s identity, in other cases doing a new authentication with a completely new typing pattern may be desired._
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - id
+      - tp
+    DeleteUserResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
           description: Http status code
         message:
           type: string
-          description: Error description
-        code:
+          example: Done
+          description: Status message, typically Done.
+        message_code:
           type: integer
-          description: Error code
-      required:
-      - success
-      - code
-      - message
-      - status
-    OtpValidateBody:
-      type: object
-      properties:
-        clientId:
-          type: string
-          description: The client id found in your TypingDNA Verify dashboard.
-        applicationId:
-          type: string
-          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
-        payload:
-          type: string
-          description: 'An AES-256-CBC encrypted JSON string containing the user identifier used during flow initialization. The JSON structure is: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode", "id": "userIdentifierWithoutRot" }. The encryption is using a Pbkdf2 key (with the client secret as password and the application id as salt), SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
-        code:
-          type: string
-          description: Is the OTP code the user sent.
-      required:
-      - clientId
-      - applicationId
-      - payload
-      - code
-    OtpValidateResponse:
-      type: object
-      properties:
+          example: 1
+          description: Message code
         success:
           type: integer
-          example: 200
+          example: 1
           description: Return 1 for success and 0 for failure.
-        code:
+        deleted:
           type: integer
-          example: 19
-          description: Response code.
-        message:
+          example: 3
+          description: Deleted records count.
+        custom_field:
           type: string
-          example: OTP given matches
-          description: Status message, typically OTP given matches.
-        status:
-          type: integer
-          example: 200
-          description: HTTP status code.
-      required:
-      - success
-      - code
-      - message
-      - status
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
     CheckUserResponseBody:
       type: object
       properties:
@@ -941,37 +905,80 @@ components:
         status:
           type: integer
           description: Http status code
-    DeleteUserResponseBody:
+    OtpValidateBody:
       type: object
       properties:
-        status:
+        clientId:
+          type: string
+          description: The client id found in your TypingDNA Verify dashboard.
+        applicationId:
+          type: string
+          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
+        payload:
+          type: string
+          description: 'An AES-256-CBC encrypted JSON string containing the user identifier used during flow initialization. The JSON structure is: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode", "id": "userIdentifierWithoutRot" }. The encryption is using a Pbkdf2 key (with the client secret as password and the application id as salt), SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
+        code:
+          type: string
+          description: Is the OTP code the user sent.
+      required:
+      - clientId
+      - applicationId
+      - payload
+      - code
+    MessageCode:
+      type: object
+      properties:
+        success:
           type: integer
-          example: 200
+          example: 0
+          description: Return 0 for failure.
+        status:
+          type: string
           description: Http status code
         message:
           type: string
-          example: Done
-          description: Status message, typically Done.
-        message_code:
+          description: Error description
+        code:
           type: integer
-          example: 1
-          description: Message code
+          description: Error code
+      required:
+      - success
+      - code
+      - message
+      - status
+    OtpValidateResponse:
+      type: object
+      properties:
         success:
           type: integer
-          example: 1
+          example: 200
           description: Return 1 for success and 0 for failure.
-        deleted:
+        code:
           type: integer
-          example: 3
-          description: Deleted records count.
-        custom_field:
+          example: 19
+          description: Response code.
+        message:
           type: string
-          example: my_custom_identifier
-          description: (optional) Returned only if it has been provided in the request body.
+          example: OTP given matches
+          description: Status message, typically OTP given matches.
+        status:
+          type: integer
+          example: 200
+          description: HTTP status code.
+      required:
+      - success
+      - code
+      - message
+      - status
   securitySchemes:
     basic_auth:
       type: http
       scheme: basic
-externalDocs:
-  description: Find out more about TypingDNA
-  url: https://api.typingdna.com
+    ResetProfileBasicAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Authorization token required for the /user/reset-profile endpoint. Obtain this from the TypingDNA Verify Dashboard under your application's Reset Profile endpoint section.
+x-refined-from:
+- typingdna-authentication-api-openapi-original.json
+- typingdna-verify-2fa-openapi-original.json
