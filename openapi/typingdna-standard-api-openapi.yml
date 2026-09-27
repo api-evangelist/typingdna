@@ -815,46 +815,6 @@ components:
           type: string
           example: my_custom_identifier
           description: (optional) Returned only if it has been provided in the request body.
-    AuthRequestBody:
-      type: object
-      properties:
-        tp:
-          type: string
-          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
-          description: A typing pattern recorded with the TypingDNA JavaScript class. For dual pass or to submit multiple patterns for enrollment, submit typing patterns separated by _;_. _Dual pass = if the user verification has been rejected the first time, we recommend recording a new typing pattern and send both typing patterns concatenated with ; the second time. In some cases this will improve the verification of a user’s identity, in other cases doing a new authentication with a completely new typing pattern may be desired._
-        custom_field:
-          type: string
-          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
-      required:
-      - id
-      - tp
-    DeleteUserResponseBody:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 200
-          description: Http status code
-        message:
-          type: string
-          example: Done
-          description: Status message, typically Done.
-        message_code:
-          type: integer
-          example: 1
-          description: Message code
-        success:
-          type: integer
-          example: 1
-          description: Return 1 for success and 0 for failure.
-        deleted:
-          type: integer
-          example: 3
-          description: Deleted records count.
-        custom_field:
-          type: string
-          example: my_custom_identifier
-          description: (optional) Returned only if it has been provided in the request body.
     CheckUserResponseBody:
       type: object
       properties:
@@ -905,6 +865,70 @@ components:
         status:
           type: integer
           description: Http status code
+    AuthRequestBody:
+      type: object
+      properties:
+        tp:
+          type: string
+          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
+          description: A typing pattern recorded with the TypingDNA JavaScript class. For dual pass or to submit multiple patterns for enrollment, submit typing patterns separated by _;_. _Dual pass = if the user verification has been rejected the first time, we recommend recording a new typing pattern and send both typing patterns concatenated with ; the second time. In some cases this will improve the verification of a user’s identity, in other cases doing a new authentication with a completely new typing pattern may be desired._
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - id
+      - tp
+    DeleteUserResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        success:
+          type: integer
+          example: 1
+          description: Return 1 for success and 0 for failure.
+        deleted:
+          type: integer
+          example: 3
+          description: Deleted records count.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    OtpValidateResponse:
+      type: object
+      properties:
+        success:
+          type: integer
+          example: 200
+          description: Return 1 for success and 0 for failure.
+        code:
+          type: integer
+          example: 19
+          description: Response code.
+        message:
+          type: string
+          example: OTP given matches
+          description: Status message, typically OTP given matches.
+        status:
+          type: integer
+          example: 200
+          description: HTTP status code.
+      required:
+      - success
+      - code
+      - message
+      - status
     OtpValidateBody:
       type: object
       properties:
@@ -941,30 +965,6 @@ components:
         code:
           type: integer
           description: Error code
-      required:
-      - success
-      - code
-      - message
-      - status
-    OtpValidateResponse:
-      type: object
-      properties:
-        success:
-          type: integer
-          example: 200
-          description: Return 1 for success and 0 for failure.
-        code:
-          type: integer
-          example: 19
-          description: Response code.
-        message:
-          type: string
-          example: OTP given matches
-          description: Status message, typically OTP given matches.
-        status:
-          type: integer
-          example: 200
-          description: HTTP status code.
       required:
       - success
       - code
