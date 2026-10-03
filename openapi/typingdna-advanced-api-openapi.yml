@@ -490,41 +490,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AuthResponseBody:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 200
-          description: Http status code
-        message:
-          type: string
-          example: Done
-          description: Status message, typically Done.
-        message_code:
-          type: integer
-          example: 1
-          description: Message code
-        action:
-          type: string
-          example: verify;enroll
-          description: Returns one of the following values, corresponding to the action performed on the request - _enroll_, _verify_, _verify;enroll_. _Enroll_ is returned if there are less than 3 previous enrollments. _Verify_ is returned if initial enrollments are met, only a verification was performed, and the pattern was not additionally enrolled. If both a verification and enrollment are performed, the value is _verify;enroll_.
-        enrollment:
-          type: integer
-          example: 1
-          description: A value of 0 (false) or 1 (true). This indicates whether the submitted typing pattern(s) was enrolled for the user.
-        result:
-          type: integer
-          example: 1
-          description: A value of 0 (false match) or 1 (true match). This value is the verification result determined by our matching engine in comparing the received pattern against the enrolled patterns.
-        high_confidence:
-          type: integer
-          example: 1
-          description: A value of 0 (false) or 1 (true). This value indicates our confidence level in the ‘result’ value returned.
-        custom_field:
-          type: string
-          example: my_custom_identifier
-          description: (optional) Returned only if it has been provided in the request body.
     VerifyRequestBody:
       type: object
       properties:
@@ -550,21 +515,6 @@ components:
           description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
       required:
       - tp
-    ErrorMessageCode:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Error name
-        message:
-          type: string
-          description: Error description
-        message_code:
-          type: integer
-          description: Message code
-        status:
-          type: integer
-          description: Http status code
     SaveRequestBody:
       type: object
       properties:
@@ -596,6 +546,56 @@ components:
           type: integer
           example: 1
           description: Return 1 for success and 0 for failure.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    ErrorMessageCode:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Error name
+        message:
+          type: string
+          description: Error description
+        message_code:
+          type: integer
+          description: Message code
+        status:
+          type: integer
+          description: Http status code
+    AuthResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        action:
+          type: string
+          example: verify;enroll
+          description: Returns one of the following values, corresponding to the action performed on the request - _enroll_, _verify_, _verify;enroll_. _Enroll_ is returned if there are less than 3 previous enrollments. _Verify_ is returned if initial enrollments are met, only a verification was performed, and the pattern was not additionally enrolled. If both a verification and enrollment are performed, the value is _verify;enroll_.
+        enrollment:
+          type: integer
+          example: 1
+          description: A value of 0 (false) or 1 (true). This indicates whether the submitted typing pattern(s) was enrolled for the user.
+        result:
+          type: integer
+          example: 1
+          description: A value of 0 (false match) or 1 (true match). This value is the verification result determined by our matching engine in comparing the received pattern against the enrolled patterns.
+        high_confidence:
+          type: integer
+          example: 1
+          description: A value of 0 (false) or 1 (true). This value indicates our confidence level in the ‘result’ value returned.
         custom_field:
           type: string
           example: my_custom_identifier
