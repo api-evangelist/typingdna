@@ -1,0 +1,44 @@
+slug: typingdna
+provider: TypingDNA
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Advanced
+  spec_file: typingdna-advanced-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /verify/{id}  Verify a user by its typing pattern; schemas VerifyRequestBody, AuthResponseBody
+  reason: Enrolment (save) and verification of typing biometrics for user authentication — identity verification/second-factor
+    authentication, i.e. Identity & Access Management.
+- tag: standard
+  spec_file: typingdna-standard-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /auto/{id}  Single endpoint that coordinates both enrollments and verifications; POST
+    /otp/validate  Validate the OTP the user has submitted
+  reason: Core enrolment/verification of typing-biometric credentials plus OTP validation and deletion
+    of user patterns — authentication and credential lifecycle, i.e. Identity & Access Management.
+- tag: optional
+  spec_file: typingdna-optional-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /changeuser/{id}  Change user identifier; POST /otp/send  Create otp send; schema SendOtpBody
+  reason: 'Auxiliary authentication-account operations: changing a user identifier, resetting a biometric
+    user profile, and sending an OTP — all identity/credential lifecycle for the authentication service.
+    Generic tag name lowers confidence slightly.'

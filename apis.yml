@@ -113,6 +113,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/typingdna-capability-edges.yml
+  name: TypingDNA Business Capability Map
 - type: Overlay
   url: overlays/typingdna-authentication-api-overlay.yaml
 - type: TrustCenter
