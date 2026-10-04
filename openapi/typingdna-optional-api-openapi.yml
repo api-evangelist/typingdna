@@ -368,6 +368,21 @@ components:
           description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
       required:
       - newuserid
+    ErrorMessageCode:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Error name
+        message:
+          type: string
+          description: Error description
+        message_code:
+          type: integer
+          description: Message code
+        status:
+          type: integer
+          description: Http status code
     ResponseBody:
       type: object
       properties:
@@ -391,21 +406,50 @@ components:
           type: string
           example: my_custom_identifier
           description: (optional) Returned only if it has been provided in the request body.
-    ErrorMessageCode:
+    SendOtpBody:
       type: object
       properties:
-        name:
+        clientId:
           type: string
-          description: Error name
+          description: The client id found in your TypingDNA Verify dashboard.
+        applicationId:
+          type: string
+          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
+        payload:
+          type: string
+          description: 'Is an AES-256-CBC encrypted string using a Pbkdf2 key (with the client secret used as the password, and the application id as the salt), of the JSON with the following structure: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode" }. We recomend to only use one of the user identifiers, either email or phone, as the other one will be disregarded. The Pbkdf2 key uses SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
+      required:
+      - clientId
+      - applicationId
+      - payload
+    SendOtpResponse:
+      type: object
+      properties:
+        success:
+          type: integer
+          example: 200
+          description: Return 1 for success and 0 for failure.
+        code:
+          type: integer
+          example: 19
+          description: Response code.
         message:
           type: string
-          description: Error description
-        message_code:
-          type: integer
-          description: Message code
+          example: OTP given matches
+          description: Status message, typically OTP given matches.
         status:
           type: integer
-          description: Http status code
+          example: 200
+          description: HTTP status code.
+        otp:
+          type: integer
+          example: 455105
+          description: The OTP code sent to the user.
+      required:
+      - success
+      - code
+      - message
+      - status
     MessageCode:
       type: object
       properties:
@@ -436,22 +480,6 @@ components:
           description: The user identifier used (email, phone number or id).
       required:
       - user_id
-    SendOtpBody:
-      type: object
-      properties:
-        clientId:
-          type: string
-          description: The client id found in your TypingDNA Verify dashboard.
-        applicationId:
-          type: string
-          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
-        payload:
-          type: string
-          description: 'Is an AES-256-CBC encrypted string using a Pbkdf2 key (with the client secret used as the password, and the application id as the salt), of the JSON with the following structure: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode" }. We recomend to only use one of the user identifiers, either email or phone, as the other one will be disregarded. The Pbkdf2 key uses SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
-      required:
-      - clientId
-      - applicationId
-      - payload
     DeleteUserResponse:
       type: object
       properties:
@@ -470,34 +498,6 @@ components:
       required:
       - success
       - message
-    SendOtpResponse:
-      type: object
-      properties:
-        success:
-          type: integer
-          example: 200
-          description: Return 1 for success and 0 for failure.
-        code:
-          type: integer
-          example: 19
-          description: Response code.
-        message:
-          type: string
-          example: OTP given matches
-          description: Status message, typically OTP given matches.
-        status:
-          type: integer
-          example: 200
-          description: HTTP status code.
-        otp:
-          type: integer
-          example: 455105
-          description: The OTP code sent to the user.
-      required:
-      - success
-      - code
-      - message
-      - status
   securitySchemes:
     basic_auth:
       type: http

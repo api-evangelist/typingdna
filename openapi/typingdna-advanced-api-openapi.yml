@@ -527,44 +527,6 @@ components:
           description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
       required:
       - tp
-    ResponseBody:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 200
-          description: Http status code
-        message:
-          type: string
-          example: Done
-          description: Status message, typically Done.
-        message_code:
-          type: integer
-          example: 1
-          description: Message code
-        success:
-          type: integer
-          example: 1
-          description: Return 1 for success and 0 for failure.
-        custom_field:
-          type: string
-          example: my_custom_identifier
-          description: (optional) Returned only if it has been provided in the request body.
-    ErrorMessageCode:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Error name
-        message:
-          type: string
-          description: Error description
-        message_code:
-          type: integer
-          description: Message code
-        status:
-          type: integer
-          description: Http status code
     AuthResponseBody:
       type: object
       properties:
@@ -596,6 +558,44 @@ components:
           type: integer
           example: 1
           description: A value of 0 (false) or 1 (true). This value indicates our confidence level in the ‘result’ value returned.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    ErrorMessageCode:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Error name
+        message:
+          type: string
+          description: Error description
+        message_code:
+          type: integer
+          description: Message code
+        status:
+          type: integer
+          description: Http status code
+    ResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        success:
+          type: integer
+          example: 1
+          description: Return 1 for success and 0 for failure.
         custom_field:
           type: string
           example: my_custom_identifier

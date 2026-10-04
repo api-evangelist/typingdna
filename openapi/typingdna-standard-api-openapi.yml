@@ -793,83 +793,6 @@ components:
       required:
       - id
       - tp
-    DeleteUserResponseBody:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 200
-          description: Http status code
-        message:
-          type: string
-          example: Done
-          description: Status message, typically Done.
-        message_code:
-          type: integer
-          example: 1
-          description: Message code
-        success:
-          type: integer
-          example: 1
-          description: Return 1 for success and 0 for failure.
-        deleted:
-          type: integer
-          example: 3
-          description: Deleted records count.
-        custom_field:
-          type: string
-          example: my_custom_identifier
-          description: (optional) Returned only if it has been provided in the request body.
-    CheckUserResponseBody:
-      type: object
-      properties:
-        status:
-          type: integer
-          example: 200
-          description: Http status code
-        message:
-          type: string
-          example: Done
-          description: Status message, typically Done.
-        message_code:
-          type: integer
-          example: 1
-          description: Message code
-        success:
-          type: integer
-          example: 1
-          description: Return 1 for success and 0 for failure.
-        count:
-          type: integer
-          example: 2
-          description: User's desktop typing patterns count, recorded on a desktop device.
-        mobilecount:
-          type: integer
-          example: 0
-          description: User's mobile typing patterns count, recorded on a mobile device.
-        type:
-          type: string
-          example: All
-          description: The requested pattern type.
-        custom_field:
-          type: string
-          example: my_custom_identifier
-          description: (optional) Returned only if it has been provided in the request body.
-    ErrorMessageCode:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Error name
-        message:
-          type: string
-          description: Error description
-        message_code:
-          type: integer
-          description: Message code
-        status:
-          type: integer
-          description: Http status code
     AuthResponseBody:
       type: object
       properties:
@@ -905,6 +828,103 @@ components:
           type: string
           example: my_custom_identifier
           description: (optional) Returned only if it has been provided in the request body.
+    ErrorMessageCode:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Error name
+        message:
+          type: string
+          description: Error description
+        message_code:
+          type: integer
+          description: Message code
+        status:
+          type: integer
+          description: Http status code
+    CheckUserResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        success:
+          type: integer
+          example: 1
+          description: Return 1 for success and 0 for failure.
+        count:
+          type: integer
+          example: 2
+          description: User's desktop typing patterns count, recorded on a desktop device.
+        mobilecount:
+          type: integer
+          example: 0
+          description: User's mobile typing patterns count, recorded on a mobile device.
+        type:
+          type: string
+          example: All
+          description: The requested pattern type.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    DeleteUserResponseBody:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 200
+          description: Http status code
+        message:
+          type: string
+          example: Done
+          description: Status message, typically Done.
+        message_code:
+          type: integer
+          example: 1
+          description: Message code
+        success:
+          type: integer
+          example: 1
+          description: Return 1 for success and 0 for failure.
+        deleted:
+          type: integer
+          example: 3
+          description: Deleted records count.
+        custom_field:
+          type: string
+          example: my_custom_identifier
+          description: (optional) Returned only if it has been provided in the request body.
+    OtpValidateBody:
+      type: object
+      properties:
+        clientId:
+          type: string
+          description: The client id found in your TypingDNA Verify dashboard.
+        applicationId:
+          type: string
+          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
+        payload:
+          type: string
+          description: 'An AES-256-CBC encrypted JSON string containing the user identifier used during flow initialization. The JSON structure is: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode", "id": "userIdentifierWithoutRot" }. The encryption is using a Pbkdf2 key (with the client secret as password and the application id as salt), SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
+        code:
+          type: string
+          description: Is the OTP code the user sent.
+      required:
+      - clientId
+      - applicationId
+      - payload
+      - code
     MessageCode:
       type: object
       properties:
@@ -950,26 +970,6 @@ components:
       - code
       - message
       - status
-    OtpValidateBody:
-      type: object
-      properties:
-        clientId:
-          type: string
-          description: The client id found in your TypingDNA Verify dashboard.
-        applicationId:
-          type: string
-          description: The id generated after creating a new integration. An new integration can be created by accessing the Verify Settings page in the TypingDNA Verify Dashboard.
-        payload:
-          type: string
-          description: 'An AES-256-CBC encrypted JSON string containing the user identifier used during flow initialization. The JSON structure is: { "email": "userEmail", "phoneNumber": "userPhoneNumberWithCountryCode", "id": "userIdentifierWithoutRot" }. The encryption is using a Pbkdf2 key (with the client secret as password and the application id as salt), SHA512 as the hashing algorithm, 10000 iterations and a key length of 32 bytes.'
-        code:
-          type: string
-          description: Is the OTP code the user sent.
-      required:
-      - clientId
-      - applicationId
-      - payload
-      - code
   securitySchemes:
     basic_auth:
       type: http
