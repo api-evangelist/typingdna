@@ -1,0 +1,12 @@
+{
+ "url": "https://api.typingdna.com/swagger-file.json",
+ "requested_url": "https://api.typingdna.com/swagger-file.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 79537,
+ "sha256": "049e9efc646229680a0ba15796c19349a21db71219ad0ecfa188b6825a70a1f9",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
