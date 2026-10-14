@@ -1,0 +1,44 @@
+generated: '2026-10-14'
+method: searched
+checked:
+- datadog/integrations/datadog-integration-edges.yml
+- ping-identity/integrations/ping-identity-integration-edges.yml
+source:
+- datadog/integrations/datadog-integration-edges.yml
+- ping-identity/integrations/ping-identity-integration-edges.yml
+edges:
+- partner_name: Datadog (own)
+  partner: datadog
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://github.com/DataDog/integrations-extras/tree/master/typingdna_activelock
+  mirror_of: datadog/integrations/datadog-integration-edges.yml
+  apps:
+  - TypingDNA ActiveLock
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Log Collection
+- partner_name: Ping Identity (own)
+  partner: ping-identity
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.pingone.com/item/typingdna-connector
+  mirror_of: ping-identity/integrations/ping-identity-integration-edges.yml
+  apps:
+  - TypingDNA Connector
+  - TypingDNA Auth Tree Node
+  - TypingDNA Subflow
+  listing_count: 3
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
