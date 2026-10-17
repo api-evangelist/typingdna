@@ -490,43 +490,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    VerifyRequestBody:
+    ErrorMessageCode:
       type: object
       properties:
-        tp:
+        name:
           type: string
-          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
-          description: A typing pattern recorded with the TypingDNA JavaScript class. For dual pass or to submit multiple patterns for enrollment, submit typing patterns separated by _;_. _Dual pass = if the user verification has been rejected the first time, we recommend recording a new typing pattern and send both typing patterns concatenated with ; the second time. This may improve the verification of a user’s identity._
-        quality:
+          description: Error name
+        message:
+          type: string
+          description: Error description
+        message_code:
           type: integer
-          enum:
-          - 1
-          - 2
-          - 3
-          description: 'An Integer: 1, 2 or 3 default: 2, recommended: 2. Read [more](https://api.typingdna.com/docs/index.html#api-guidelines-quality).'
-        device_similarity_only:
-          type: boolean
-          description: If this parameter is included in the request body, only the _device_similarity_ field is returned.
-        position_only:
-          type: boolean
-          description: If this parameter is included in the request body, only the _positions_ field is returned ([mobile position](https://api.typingdna.com/docs/index.html#api-guidelines-faq-mobile) in which the typing pattern was recorded).
-        custom_field:
-          type: string
-          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
-      required:
-      - tp
-    SaveRequestBody:
-      type: object
-      properties:
-        tp:
-          type: string
-          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
-          description: A typing pattern recorded with the TypingDNA JavaScript class.
-        custom_field:
-          type: string
-          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
-      required:
-      - tp
+          description: Message code
+        status:
+          type: integer
+          description: Http status code
     AuthResponseBody:
       type: object
       properties:
@@ -562,21 +540,6 @@ components:
           type: string
           example: my_custom_identifier
           description: (optional) Returned only if it has been provided in the request body.
-    ErrorMessageCode:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Error name
-        message:
-          type: string
-          description: Error description
-        message_code:
-          type: integer
-          description: Message code
-        status:
-          type: integer
-          description: Http status code
     ResponseBody:
       type: object
       properties:
@@ -600,6 +563,43 @@ components:
           type: string
           example: my_custom_identifier
           description: (optional) Returned only if it has been provided in the request body.
+    SaveRequestBody:
+      type: object
+      properties:
+        tp:
+          type: string
+          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
+          description: A typing pattern recorded with the TypingDNA JavaScript class.
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - tp
+    VerifyRequestBody:
+      type: object
+      properties:
+        tp:
+          type: string
+          example: 0,3.2,0,0,6,2092090166,0,-1,-1,0,-1,-1,0,-1,-1,2,64,5,2,25,2,1,0,0,1,2,1,916068587,1,1,0,0,0,1,2560,1440,2,1015,118,0,3172778039|1968,98|61,49|137,76|164,63|113,62|36,76
+          description: A typing pattern recorded with the TypingDNA JavaScript class. For dual pass or to submit multiple patterns for enrollment, submit typing patterns separated by _;_. _Dual pass = if the user verification has been rejected the first time, we recommend recording a new typing pattern and send both typing patterns concatenated with ; the second time. This may improve the verification of a user’s identity._
+        quality:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          description: 'An Integer: 1, 2 or 3 default: 2, recommended: 2. Read [more](https://api.typingdna.com/docs/index.html#api-guidelines-quality).'
+        device_similarity_only:
+          type: boolean
+          description: If this parameter is included in the request body, only the _device_similarity_ field is returned.
+        position_only:
+          type: boolean
+          description: If this parameter is included in the request body, only the _positions_ field is returned ([mobile position](https://api.typingdna.com/docs/index.html#api-guidelines-faq-mobile) in which the typing pattern was recorded).
+        custom_field:
+          type: string
+          description: (optional) You may provide a custom field in the request that can serve as a unique identifier of the user or the session. This field will be returned on response, provided the request hasn't been rejected based on authentication or syntax.
+      required:
+      - tp
   securitySchemes:
     basic_auth:
       type: http
